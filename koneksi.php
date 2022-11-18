@@ -1,5 +1,5 @@
 <?php 
-    // Koneksi ke database
+    // Koneksi ke database mysql
     $koneksi = mysqli_connect("localhost", "root", "", "db_tailor");
     // Cek koneksi
     if (!$koneksi) {
