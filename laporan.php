@@ -222,48 +222,41 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>User</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Reason</th>
+                  <th>No Transaksi</th>
+                  <th>Nama Pembeli</th>
+                  <th>Tanggal Transaksi</th>
+                  <th>Selesai Transaksi</th>
+                  <th>Total</th>
                 </tr>
               </thead>
               <tbody>
+              <?php 
+                    //call koneksi.php
+                    include 'koneksi.php';
+                    //mysqli_query untuk menjalankan query
+                    $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi,data_pembeli.nama_pembeli, transaksi.waktu,status.tanggal_jadi,transaksi.total 
+                    FROM 
+                    transaksi JOIN status ON transaksi.kode_transaksi=status.kode_transaksi 
+                    JOIN data_pembeli ON data_pembeli.id_pembeli = transaksi.id_pembeli
+                    WHERE status.status_transaksi='Selesai'");
+                    //no
+                    $no = 1;
+                    //while untuk menampilkan data
+                    while($d = mysqli_fetch_array($data)){
+                ?>
                 <tr>
-                  <td>183</td>
-                  <td>John Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-success">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                     <td><?php echo $no; ?></td>
+                    <td><?php echo $d['kode_transaksi']; ?></td>
+                    <td><?php echo $d['nama_pembeli']; ?></td>
+                    <td><?php echo $d['waktu']; ?></td>
+                    <td><?php echo $d['tanggal_jadi']; ?></td>
+                    <td><?php echo $d['total']; ?></td>
+                    <td>
                 </tr>
-                <tr>
-                  <td>219</td>
-                  <td>Alexander Pierce</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-warning">Pending</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>657</td>
-                  <td>Bob Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-primary">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>175</td>
-                  <td>Mike Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-danger">Denied</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>175</td>
-                  <td>Mike Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-danger">Denied</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
+                <?php 
+                    $no++;
+                    }
+                  ?>
               </tbody>
             </table>
           </div>
