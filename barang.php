@@ -186,8 +186,41 @@
           <div class="col-sm-6">
             <h1 class="m-0">Master Barang</h1>
             <br>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add">
               Tambah</button>
+          <!-- Modal -->
+          <div class="modal fade" id="modal-add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"><b>Tambah Barang</b></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                      <label for="kode">Kode Barang</label>
+                      <input type="text" class="form-control" id="kodebarang" placeholder="Kode Barang">
+                    </div>
+                    <div class="form-group">
+                      <label for="nama">Nama Barang</label>
+                      <input type="text" class="form-control" id="namabarang" placeholder="Nama Barang">
+                    </div>
+                    <div class="form-group">
+                      <label for="harga">Harga Barang</label>
+                      <input type="number" class="form-control" id="hargabarang" placeholder="Harga Barang">
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                  <button type="button" class="btn btn-primary">Tambah</button>
+                </div>
+              </div>
+            </div>
+          </div>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
