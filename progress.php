@@ -1,3 +1,9 @@
+<?php
+  require ('koneksi.php');
+  require ('query.php');
+  $object = new crud;
+  ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -227,29 +233,22 @@
                 </tr>
               </thead>
               <tbody>
-              <?php 
-                    //call koneksi.php
-                    include 'koneksi.php';
-                    //mysqli_query untuk menjalankan query
-                    $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi, transaksi.waktu, tanggal_jadi, 
-                    status_transaksi FROM status JOIN transaksi ON transaksi.kode_transaksi=status.kode_transaksi WHERE status_transaksi!='Selesai'");
-                    //no
-                    $no = 1;
-                    //while untuk menampilkan data
-                    while($d = mysqli_fetch_array($data)){
-                ?>
-                <tr>
-                     <td><?php echo $no; ?></td>
-                    <td><?php echo $d['kode_transaksi']; ?></td>
-                    <td><?php echo $d['waktu']; ?></td>
-                    <td><?php echo $d['tanggal_jadi']; ?></td>
-                    <td><?php echo $d['status_transaksi']; ?></td>
-                    <td>
-                </tr>
-                <?php 
-                    $no++;
-                    }
-                ?>    
+              <?php
+                $data=$object->lihatProgress();
+                $no = 1;
+                if($data->rowCount()>0) {
+                    while($row=$data->fetch(PDO::FETCH_ASSOC)) { ?>
+                    <tr>
+                        <td><?php echo $no;?></td>
+                        <td><?php echo $row['kode_transaksi']; ?></td>
+                        <td><?php echo $row['waktu']; ?></td>
+                        <td><?php echo $row['tanggal_jadi']; ?></td>
+                        <td><?php echo $row['status_transaksi']; ?></td>
+                    </tr>
+                <?php
+                $no++;
+                    }}
+              ?>
                 <tr>
                 </tr>
               </tbody>
