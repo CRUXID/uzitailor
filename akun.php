@@ -1,3 +1,10 @@
+<?php
+  require ('koneksi.php');
+  require ('query.php');
+  $object = new crud;
+  ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -230,30 +237,20 @@
                 </tr>
               </thead>
               <tbody>
-                <?php 
-                    //call koneksi.php
-                    include 'koneksi.php';
-                    //mysqli_query untuk menjalankan query
-                    $data = mysqli_query($koneksi,"select username, nama_karyawan, alamat_karyawan, jenis_kelamin, no_hp, level from karyawan where level != 'Admin'");
-                    //no
-                    $no = 1;
-                    //while untuk menampilkan data
-                    while($d = mysqli_fetch_array($data)){
-                ?>
-                <tr>
-                    <td><?php echo $d['nama_karyawan']; ?></td>
-                    <td><?php echo $d['alamat_karyawan']; ?></td>
-                    <td><?php echo $d['jenis_kelamin']; ?></td>
-                    <td><?php echo $d['no_hp']; ?></td>
-                    <td>
-                        <a href="edit.php?kode_barang=<?php echo $d['username']; ?>" class="btn btn-warning">Edit</a>
-                        <a href="hapus.php?kode_barang=<?php echo $d['username']; ?>" class="btn btn-danger">Hapus</a>
-                    </td>
-                </tr>
-                <?php 
-                    $no++;
-                    }
-                ?>
+              <?php
+                $data=$object->lihatAkun();
+                if($data->rowCount()>0) {
+                    while($row=$data->fetch(PDO::FETCH_ASSOC)) { ?>
+                    <tr>
+                        <td><?php echo $row['nama_karyawan']; ?></td>
+                        <td><?php echo $row['alamat_karyawan']; ?></td>
+                        <td><?php echo $row['jenis_kelamin']; ?></td>
+                        <td><?php echo $row['no_hp']; ?></td>
+                        <td><?php echo $row['level']; ?></td>
+                    </tr>
+                <?php
+                    }}
+              ?>
               </tbody>
             </table>
           </div>
