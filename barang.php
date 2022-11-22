@@ -1,3 +1,20 @@
+<?php
+  require ('koneksi.php');
+  require ('query.php');
+
+  $obj = new crud;
+
+  if($_SERVER['REQUEST_METHOD']=='POST'):
+      $kodebarang = $_POST['kode'];
+      $namabarang = $_POST['nama'];
+      $hargabarang = $_POST['harga'];
+      if($obj->insertBarang($kodebarang, $namabarang, $hargabarang)):
+          echo '<div class="alert alert-succes">Data berhasil disimpan</div>';
+      else:
+          echo '<div class="alert alert-danger">Data gagal disimpan</div';
+      endif;
+  endif;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -199,24 +216,24 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                      <label for="kode">Kode Barang</label>
-                      <input type="text" class="form-control" id="kodebarang" placeholder="Kode Barang">
-                    </div>
-                    <div class="form-group">
-                      <label for="nama">Nama Barang</label>
-                      <input type="text" class="form-control" id="namabarang" placeholder="Nama Barang">
-                    </div>
-                    <div class="form-group">
-                      <label for="harga">Harga Barang</label>
-                      <input type="number" class="form-control" id="hargabarang" placeholder="Harga Barang">
-                    </div>
-                  </form>
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                  <div class="form-group">
+                    <label for="kode">Kode Barang</label>
+                    <input type="text" class="form-control" name="kode" placeholder="Kode Barang" require>
+                  </div>
+                  <div class="form-group">
+                    <label for="nama">Nama Barang</label>
+                    <input type="text" class="form-control" name="nama" placeholder="Nama Barang" require>
+                  </div>
+                  <div class="form-group">
+                    <label for="harga">Harga Barang</label>
+                    <input type="number" class="form-control" name="harga" placeholder="Harga Barang" require>
+                  </div>
+                </form>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                  <button type="button" class="btn btn-primary">Tambah</button>
+                  <button type="submit" name="tambah" class="btn btn-primary">Tambah</button>
                 </div>
               </div>
             </div>
@@ -257,34 +274,29 @@
             <table class="table table-hover text-nowrap">
               <thead>
                 <tr>
+                  <th>No</th>
                   <th>Kode Barang</th>
                   <th>Nama Barang</th>
+                  <th>Harga Barang</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                <?php 
-                    //call koneksi.php
-                    include 'koneksi.php';
-                    //mysqli_query untuk menjalankan query
-                    $data = mysqli_query($koneksi,"select kode_barang, nama_barang from master_barang");
-                    //no
-                    $no = 1;
-                    //while untuk menampilkan data
-                    while($d = mysqli_fetch_array($data)){
-                ?>
-                <tr>
-                    <td><?php echo $d['kode_barang']; ?></td>
-                    <td><?php echo $d['nama_barang']; ?></td>
-                    <td>
-                        <a href="edit.php?kode_barang=<?php echo $d['kode_barang']; ?>" class="btn btn-warning">Edit</a>
-                        <a href="hapus.php?kode_barang=<?php echo $d['kode_barang']; ?>" class="btn btn-danger">Hapus</a>
-                    </td>
-                </tr>
-                <?php 
-                    $no++;
-                    }
-                ?>
+              <?php
+                $data=$obj->lihatBarang();
+                $no = 1;
+                if($data->rowCount()>0) {
+                    while($row=$data->fetch(PDO::FETCH_ASSOC)) { ?>
+                    <tr>
+                        <td><?php echo $no;?></td>
+                        <td><?php echo $row['kode_barang']; ?></td>
+                        <td><?php echo $row['nama_barang']; ?></td>
+                        <td><?php echo $row['harga']; ?></td>
+                    </tr>
+                <?php
+                $no++;
+                    }}
+              ?>
               </tbody>
             </table>
           </div>

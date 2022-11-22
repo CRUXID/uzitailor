@@ -1,8 +1,22 @@
-<?php 
-    // Koneksi ke database mysql
-    $koneksi = mysqli_connect("localhost", "root", "", "db_tailor");
-    // Cek koneksi
-    if (!$koneksi) {
-        die("Koneksi gagal: " . mysqli_connect_error());
-    }
+<?php
+class koneksi
+{
+    private $host="localhost";
+    private $user="root";
+    private $pass="";
+    private $db="db_tailor";
+    protected $koneksi;
+    public function __construct(){
+        try
+    {
+    $this->koneksi = new PDO("mysql:host=$this->host; dbname=$this->db",$this->user, $this->pass);
+    $this->koneksi->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}
+catch(PDOException $e)
+{
+    echo $e->getMessage();
+}
+return $this->koneksi;
+}
+}
 ?>
