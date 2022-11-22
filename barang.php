@@ -2,14 +2,24 @@
   require ('koneksi.php');
   require ('query.php');
 
-  $obj = new crud;
+  $object = new crud;
 
   if($_SERVER['REQUEST_METHOD']=='POST'):
       $kodebarang = $_POST['kode'];
       $namabarang = $_POST['nama'];
       $hargabarang = $_POST['harga'];
-      if($obj->insertBarang($kodebarang, $namabarang, $hargabarang)):
-          echo '<div class="alert alert-succes">Data berhasil disimpan</div>';
+      if($object->insertBarang($kodebarang, $namabarang, $hargabarang)):
+        echo '<script>
+          setTimeout(function() {
+              swal({
+                  title: "Berhasil !",
+                  text: "Data Berhasil Disimpan",
+                  type: "success"
+              }, function() {
+                  window.location = "barang.php";
+              });
+          }, 1000);
+        </script>';
       else:
           echo '<div class="alert alert-danger">Data gagal disimpan</div';
       endif;
@@ -30,6 +40,8 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- Sweet Alert -->
+  <link rel="stylesheet" href="plugins/sweetalert2/sweetalert2.min.css">
 </head>
 <!--
 `body` tag options:
@@ -219,21 +231,22 @@
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                   <div class="form-group">
                     <label for="kode">Kode Barang</label>
-                    <input type="text" class="form-control" name="kode" placeholder="Kode Barang" require>
+                    <input type="text" class="form-control" name="kode" placeholder="Kode Barang" required>
                   </div>
                   <div class="form-group">
                     <label for="nama">Nama Barang</label>
-                    <input type="text" class="form-control" name="nama" placeholder="Nama Barang" require>
+                    <input type="text" class="form-control" name="nama" placeholder="Nama Barang" required>
                   </div>
                   <div class="form-group">
                     <label for="harga">Harga Barang</label>
-                    <input type="number" class="form-control" name="harga" placeholder="Harga Barang" require>
+                    <input type="number" class="form-control" name="harga" placeholder="Harga Barang" required>
                   </div>
-                </form>
-                </div>
-                <div class="modal-footer">
+                  <br>
+                  <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                   <button type="submit" name="tambah" class="btn btn-primary">Tambah</button>
+                </div>
+                </form>
                 </div>
               </div>
             </div>
@@ -283,7 +296,7 @@
               </thead>
               <tbody>
               <?php
-                $data=$obj->lihatBarang();
+                $data=$object->lihatBarang();
                 $no = 1;
                 if($data->rowCount()>0) {
                     while($row=$data->fetch(PDO::FETCH_ASSOC)) { ?>
@@ -292,6 +305,10 @@
                         <td><?php echo $row['kode_barang']; ?></td>
                         <td><?php echo $row['nama_barang']; ?></td>
                         <td><?php echo $row['harga']; ?></td>
+                        <td>
+                            <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-warning">Edit</a>
+                            <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn btn-danger">Delete</a>
+                        </td>
                     </tr>
                 <?php
                 $no++;
