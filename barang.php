@@ -239,6 +239,8 @@
                 </div>
               </div>
             </div>
+          
+          <!-- Modal -->
           </div>
           </div><!-- /.col -->
           <div class="col-sm-6">
