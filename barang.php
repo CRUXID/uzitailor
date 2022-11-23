@@ -1,28 +1,17 @@
-<?php
+<?php 
   require ('koneksi.php');
-  require ('query.php');
-
-  $object = new crud;
-
   if($_SERVER['REQUEST_METHOD']=='POST'):
-      $kodebarang = $_POST['kode'];
-      $namabarang = $_POST['nama'];
-      $hargabarang = $_POST['harga'];
-      if($object->insertBarang($kodebarang, $namabarang, $hargabarang)):
-        echo '<script>
-          setTimeout(function() {
-              swal({
-                  title: "Berhasil !",
-                  text: "Data Berhasil Disimpan",
-                  type: "success"
-              }, function() {
-                  window.location = "barang.php";
-              });
-          }, 1000);
-        </script>';
-      else:
-          echo '<div class="alert alert-danger">Data gagal disimpan</div';
-      endif;
+    $kodebarang = $_POST['kode'];
+    $namabarang = $_POST['nama'];
+    $hargabarang = $_POST['harga'];
+    //query untuk insert data
+    $sql = "INSERT INTO master_barang (kode_barang, nama_barang, harga) VALUES ('$kodebarang', '$namabarang', '$hargabarang')";
+    //eksekusi query
+    if(mysqli_query($koneksi, $sql)):
+      echo 'Berhasil Menambahkan Barang';
+    else:
+      echo 'Gagal Menambahkan Barang';
+    endif;
   endif;
 ?>
 <!DOCTYPE html>
@@ -295,25 +284,30 @@
                 </tr>
               </thead>
               <tbody>
-              <?php
-                $data=$object->lihatBarang();
-                $no = 1;
-                if($data->rowCount()>0) {
-                    while($row=$data->fetch(PDO::FETCH_ASSOC)) { ?>
-                    <tr>
-                        <td><?php echo $no;?></td>
-                        <td><?php echo $row['kode_barang']; ?></td>
-                        <td><?php echo $row['nama_barang']; ?></td>
-                        <td><?php echo $row['harga']; ?></td>
-                        <td>
-                            <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-warning">Edit</a>
-                            <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
-                <?php
-                $no++;
-                    }}
-              ?>
+              <?php 
+                    //call koneksi.php
+                    include 'koneksi.php';
+                    //mysqli_query untuk menjalankan query
+                    $data = mysqli_query($koneksi,"SELECT kode_barang, nama_barang, harga FROM master_barang");
+                    //no
+                    $no = 1;
+                    //while untuk menampilkan data
+                    while($d = mysqli_fetch_array($data)){
+                ?>
+                <tr>
+                    <td><?php echo $no ?></td>
+                    <td><?php echo $d['kode_barang']; ?></td>
+                    <td><?php echo $d['nama_barang']; ?></td>
+                    <td><?php echo $d['harga']; ?></td>
+                    <td>
+                        <a href="edit.php?kode_barang=<?php echo $d['kode_barang']; ?>" class="btn btn-warning">Edit</a>
+                        <a href="hapus.php?kode_barang=<?php echo $d['kode_barang']; ?>" class="btn btn-danger">Hapus</a>
+                    </td>
+                </tr>
+                <?php 
+                    $no++;
+                    }
+                ?>
               </tbody>
             </table>
           </div>
@@ -349,9 +343,9 @@
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- AdminLTE -->
 <script src="dist/js/adminlte.js"></script>
-
 <!-- OPTIONAL SCRIPTS -->
 <script src="plugins/chart.js/Chart.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
