@@ -1,7 +1,5 @@
 <?php
   require ('koneksi.php');
-  require ('query.php');
-  $object = new crud;
   ?>
 
 
@@ -238,18 +236,23 @@
               </thead>
               <tbody>
               <?php
-                $data=$object->lihatAkun();
-                if($data->rowCount()>0) {
-                    while($row=$data->fetch(PDO::FETCH_ASSOC)) { ?>
-                    <tr>
-                        <td><?php echo $row['nama_karyawan']; ?></td>
-                        <td><?php echo $row['alamat_karyawan']; ?></td>
-                        <td><?php echo $row['jenis_kelamin']; ?></td>
-                        <td><?php echo $row['no_hp']; ?></td>
-                        <td><?php echo $row['level']; ?></td>
+                //call koneksi.php
+                include 'koneksi.php';
+                //mysqli_query untuk menjalankan query
+                $data = mysqli_query($koneksi,"select username, nama_karyawan, alamat_karyawan, jenis_kelamin, no_hp, level from karyawan where level != 'Admin'");
+                //no
+                $no = 1;
+                //while untuk menampilkan data
+                while($d = mysqli_fetch_array($data)){
+            ?>
+                        <td><?php echo $d['nama_karyawan']; ?></td>
+                        <td><?php echo $d['alamat_karyawan']; ?></td>
+                        <td><?php echo $d['jenis_kelamin']; ?></td>
+                        <td><?php echo $d['no_hp']; ?></td>
+                        <td><?php echo $d['level']; ?></td>
                     </tr>
                 <?php
-                    }}
+                    }
               ?>
               </tbody>
             </table>

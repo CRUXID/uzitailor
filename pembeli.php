@@ -1,8 +1,6 @@
 <?php
-  require ('koneksi.php');
-  require ('query.php');
-  $object = new crud;
-  ?>
+require ('koneksi.php');
+?>
 
 
 <!DOCTYPE html>
@@ -239,18 +237,23 @@
               </thead>
               <tbody>
               <?php
-                $data=$object->lihatPembelli();
-                if($data->rowCount()>0) {
-                    while($row=$data->fetch(PDO::FETCH_ASSOC)) { ?>
-                    <tr>
-                        <td><?php echo $row['id_pembeli']; ?></td>
-                        <td><?php echo $row['nama_pembeli']; ?></td>
-                        <td><?php echo $row['alamat']; ?></td>
-                        <td><?php echo $row['no_hp']; ?></td>
+                //call koneksi.php
+                include 'koneksi.php';
+                //mysqli_query untuk menjalankan query
+                $data = mysqli_query($koneksi,"SELECT id_pembeli, nama_pembeli,alamat,no_hp FROM data_pembeli");
+                //no
+                $no = 1;
+                //while untuk menampilkan data
+                while($d = mysqli_fetch_array($data)){
+            ?>
+                        <td><?php echo $d['id_pembeli']; ?></td>
+                        <td><?php echo $d['nama_pembeli']; ?></td>
+                        <td><?php echo $d['alamat']; ?></td>
+                        <td><?php echo $d['no_hp']; ?></td>
                       
                     </tr>
                 <?php
-                    }}
+                    }
               ?>
               
               </tbody>
