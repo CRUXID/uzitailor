@@ -1,3 +1,10 @@
+<?php
+  require ('koneksi.php');
+  require ('query.php');
+  $object = new crud;
+  ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -192,7 +199,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Master Barang</li>
+              <li class="breadcrumb-item active">Data Pembeli</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -224,36 +231,28 @@
             <table class="table table-hover text-nowrap">
               <thead>
                 <tr>
+                  <th>ID Pembeli</th>
                   <th>Nama Pembeli</th>
                   <th>Alamat</th>
-                  <th>No Hp</th>
-                  <th>Aksi</th>
+                  <th>No HP</th>
                 </tr>
               </thead>
               <tbody>
-                <?php 
-                    //call koneksi.php
-                    include 'koneksi.php';
-                    //mysqli_query untuk menjalankan query
-                    $data = mysqli_query($koneksi,"select id_pembeli, nama_pembeli, alamat, no_hp from data_pembeli");
-                    //no
-                    $no = 1;
-                    //while untuk menampilkan data
-                    while($d = mysqli_fetch_array($data)){
-                ?>
-                <tr>
-                    <td><?php echo $d['nama_pembeli']; ?></td>
-                    <td><?php echo $d['alamat']; ?></td>
-                    <td><?php echo $d['no_hp']; ?></td>
-                    <td>
-                        <a href="edit.php?kode_barang=<?php echo $d['id_pembeli']; ?>" class="btn btn-warning">Edit</a>
-                        <a href="hapus.php?kode_barang=<?php echo $d['id_pembeli']; ?>" class="btn btn-danger">Hapus</a>
-                    </td>
-                </tr>
-                <?php 
-                    $no++;
-                    }
-                ?>
+              <?php
+                $data=$object->lihatPembelli();
+                if($data->rowCount()>0) {
+                    while($row=$data->fetch(PDO::FETCH_ASSOC)) { ?>
+                    <tr>
+                        <td><?php echo $row['id_pembeli']; ?></td>
+                        <td><?php echo $row['nama_pembeli']; ?></td>
+                        <td><?php echo $row['alamat']; ?></td>
+                        <td><?php echo $row['no_hp']; ?></td>
+                      
+                    </tr>
+                <?php
+                    }}
+              ?>
+              
               </tbody>
             </table>
           </div>
