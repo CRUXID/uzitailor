@@ -239,9 +239,8 @@
                 </div>
               </div>
             </div>
-          
+            </div>
           <!-- Modal -->
-          </div>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
