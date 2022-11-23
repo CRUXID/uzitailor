@@ -1,10 +1,10 @@
 <?php 
-    $connection = new mysqli("localhost", "root", "", "db_tailor");
+    require ('../koneksi.php');
     $kodebarang = $_POST['kode_barang']; 
     $namabarang = $_POST['nama_barang'];
-    $harga      = $_POST['harga'];
+    $hargabarang      = $_POST['harga'];
     
-    $result = mysqli_query($connection, "INSERT INTO master_barang SET kode_barang='$kodebarang', nama_barang='$namabarang', harga='$harga'");
+    $result = mysqli_query($koneksi, "INSERT INTO master_barang (kode_barang, nama_barang, harga) VALUES ('$kodebarang', '$namabarang', '$hargabarang')");
     
     if($result){
         echo json_encode([
