@@ -1,5 +1,19 @@
-<?php
-require ('koneksi.php');
+<?php 
+  require ('koneksi.php');
+  if($_SERVER['REQUEST_METHOD']=='POST'):
+    $idpembeli = $_POST['id'];
+    $namapembeli = $_POST['nama'];
+    $alamat = $_POST['alamat'];
+    $no_hp = $_POST['nohp'];
+    //query untuk insert data
+    $sql = "INSERT INTO data_pembeli (id_pembeli, nama_pembeli, alamat, no_hp) VALUES ('$idpembeli', '$namapembeli', '$alamat', '$no_hp')";
+    //eksekusi query
+    if(mysqli_query($koneksi, $sql)):
+      echo 'Berhasil Menambahkan Pembeli';
+    else:
+      echo 'Gagal Menambahkan Pembeli';
+    endif;
+  endif;
 ?>
 
 
@@ -198,7 +212,7 @@ require ('koneksi.php');
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"><b>Tambah Barang</b></h5>
+                  <h5 class="modal-title" id="exampleModalLabel"><b>Tambah Pembeli</b></h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -206,17 +220,22 @@ require ('koneksi.php');
                 <div class="modal-body">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                   <div class="form-group">
-                    <label for="kode">Kode Barang</label>
-                    <input type="text" class="form-control" name="kode" placeholder="Kode Barang" required>
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" name="id" placeholder="ID" required>
                   </div>
                   <div class="form-group">
-                    <label for="nama">Nama Barang</label>
-                    <input type="text" class="form-control" name="nama" placeholder="Nama Barang" required>
+                    <label for="nama">Nama Pembeli</label>
+                    <input type="text" class="form-control" name="nama" placeholder="Nama Pembeli" required>
                   </div>
                   <div class="form-group">
-                    <label for="harga">Harga Barang</label>
-                    <input type="number" class="form-control" name="harga" placeholder="Harga Barang" required>
+                    <label for="alamat">Alamat</label>
+                    <input type="text" class="form-control" name="alamat" placeholder="Alamat" required>
                   </div>
+                  <div class="form-group">
+                    <label for="nohp">No HP</label>
+                    <input type="text" class="form-control" name="nohp" placeholder="No HP" required>
+                  </div>
+                  
                   <br>
                   <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>

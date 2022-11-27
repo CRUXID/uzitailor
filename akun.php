@@ -1,7 +1,22 @@
-<?php
+<?php 
   require ('koneksi.php');
-  ?>
-
+  if($_SERVER['REQUEST_METHOD']=='POST'):
+    $username = $_POST['username'];
+    $namakaryawan = $_POST['nama_karyawan'];
+    $alamat = $_POST['alamat'];
+    $jeniskelamin = $_POST['jenis_kelamin'];
+    $no_hp = $_POST['no_hp'];
+    $level = $_POST['level'];
+    //query untuk insert data
+    $sql = "INSERT INTO karyawan (username, nama_karyawan, alamat, jenis_kelamin, no_hp, 'level') VALUES ('$username', '$namakaryawan', '$alamat', $jeniskelamin', '$no_hp', '$level')";
+    //eksekusi query
+    if(mysqli_query($koneksi, $sql)):
+      echo 'Berhasil Menambahkan Pembeli';
+    else:
+      echo 'Gagal Menambahkan Pembeli';
+    endif;
+  endif;
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -193,6 +208,53 @@
             <br>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
               Tambah</button> 
+              <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"><b>Tambah Akun</b></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                  <div class="form-group">
+                    <label for="nohp">Username</label>
+                    <input type="text" class="form-control" name="username" placeholder="Username" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="id">Nama Karyawan </label>
+                    <input type="text" class="form-control" name="nama_karyawan" placeholder="Nama Karyawan" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="nama">Alamat</label>
+                    <input type="text" class="form-control" name="alamat" placeholder="Alamat" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="alamat">Jenis Kelamin</label>
+                    <input type="text" class="form-control" name="jenis_kelamin" placeholder="Jenis Kelamin" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="nohp">No HP</label>
+                    <input type="text" class="form-control" name="no_hp" placeholder="No HP" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="nohp">Level</label>
+                    <input type="text" class="form-control" name="level" placeholder="Level" required>
+                  </div>
+                  
+                  <br>
+                  <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                  <button type="submit" name="tambah" class="btn btn-primary">Tambah</button>
+                </div>
+                </form>
+                </div>
+              </div>
+            </div>
+          <!-- Modal -->
+          </div>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
