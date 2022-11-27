@@ -189,6 +189,9 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0">Order on Progress</h1>
+            <br>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-lunas">
+              Pelunasan</button>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
