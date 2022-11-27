@@ -6,9 +6,10 @@
     $alamat = $_POST['alamat'];
     $jeniskelamin = $_POST['jenis_kelamin'];
     $no_hp = $_POST['no_hp'];
+    $pass = $_POST['password'];
     $level = $_POST['level'];
     //query untuk insert data
-    $sql = "INSERT INTO karyawan (username, nama_karyawan, alamat, jenis_kelamin, no_hp, 'level') VALUES ('$username', '$namakaryawan', '$alamat', $jeniskelamin', '$no_hp', '$level')";
+    $sql = "INSERT INTO `karyawan`(`id_karyawan`, `username`, `nama_karyawan`, `alamat_karyawan`, `jenis_kelamin`, `no_hp`, `foto_profil`, `password`, `level`) VALUES ('','$username','$namakaryawan','$alamat','$jeniskelamin','$no_hp','','$pass','$level')";
     //eksekusi query
     if(mysqli_query($koneksi, $sql)):
       echo 'Berhasil Menambahkan Pembeli';

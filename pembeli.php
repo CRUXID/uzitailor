@@ -7,7 +7,7 @@
     $username = $_POST['username'];
     $password = $_POST['password'];
     //query untuk insert data
-    $sql = "INSERT INTO data_pembeli('id_pembeli', 'nama_pembeli', 'alamat', 'no_hp', 'username', 'password') VALUES ('', '$nama', '$alamat', '$nohp', '$username', '$password')";
+    $sql = "INSERT INTO `data_pembeli`(`id_pembeli`, `nama_pembeli`, `alamat`, `no_hp`, `username`, `password`) VALUES ('','$nama','$alamat','$no_hp','$username','$password')";
     //eksekusi query
     if(mysqli_query($koneksi, $sql)):
       echo 'Berhasil Menambahkan Pembeli';
