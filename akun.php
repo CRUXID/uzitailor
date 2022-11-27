@@ -2,13 +2,21 @@
   require ('koneksi.php');
   if($_SERVER['REQUEST_METHOD']=='POST'):
     $username = $_POST['username'];
+    $password = $_POST['password'];
     $namakaryawan = $_POST['nama_karyawan'];
     $alamat = $_POST['alamat'];
-    $jeniskelamin = $_POST['jenis_kelamin'];
+    $kelamin = $_POST['kelamin'];
     $no_hp = $_POST['no_hp'];
-    $level = $_POST['level'];
+    $filename = $_FILES["uploadfile"]["name"];
+    $tempname = $_FILES["uploadfile"]["tmp_name"];
+    $folder = "./image/" . $filename;
     //query untuk insert data
-    $sql = "INSERT INTO karyawan (username, nama_karyawan, alamat, jenis_kelamin, no_hp, 'level') VALUES ('$username', '$namakaryawan', '$alamat', $jeniskelamin', '$no_hp', '$level')";
+    $sql = "INSERT INTO `karyawan` (`id_karyawan`, `username`, `nama_karyawan`, `alamat_karyawan`, `jenis_kelamin`, `no_hp`, `foto_profil`, `password`, `level`) VALUES ('', '$username', '$namakaryawan', '$alamat', $kelamin', '$no_hp', '$filename', '$password', 'Karyawan')";
+    if (move_uploaded_file($tempname, $folder))  {
+      $msg = "Image uploaded successfully";
+    }else{
+      $msg = "Failed to upload image";
+    }
     //eksekusi query
     if(mysqli_query($koneksi, $sql)):
       echo 'Berhasil Menambahkan Pembeli';
@@ -218,10 +226,14 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
                   <div class="form-group">
                     <label for="nohp">Username</label>
                     <input type="text" class="form-control" name="username" placeholder="Username" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="nohp">Password</label>
+                    <input type="text" class="form-control" name="password" placeholder="Password" required>
                   </div>
                   <div class="form-group">
                     <label for="id">Nama Karyawan </label>
@@ -232,18 +244,23 @@
                     <input type="text" class="form-control" name="alamat" placeholder="Alamat" required>
                   </div>
                   <div class="form-group">
-                    <label for="alamat">Jenis Kelamin</label>
-                    <input type="text" class="form-control" name="jenis_kelamin" placeholder="Jenis Kelamin" required>
+                        <label>Jenis Kelamin</label>
+                        <select class="form-control" name="kelamin">
+                          <option>Laki - Laki</option>
+                          <option>Perempuan</option>
+                          <option>Lainnya</option>
+                        </select>
                   </div>
                   <div class="form-group">
                     <label for="nohp">No HP</label>
                     <input type="text" class="form-control" name="no_hp" placeholder="No HP" required>
                   </div>
                   <div class="form-group">
-                    <label for="nohp">Level</label>
-                    <input type="text" class="form-control" name="level" placeholder="Level" required>
+                    <label for="uploadfile">Foto Profil</label>
+                    <div class="form-group">
+                      <input class="form-control" type="file" name="uploadfile" value="" />
+                    </div>
                   </div>
-                  
                   <br>
                   <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>

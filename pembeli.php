@@ -3,11 +3,11 @@
   if($_SERVER['REQUEST_METHOD']=='POST'):
     $nama = $_POST['nama'];
     $alamat = $_POST['alamat'];
-    $no_hp = $_POST['nohp'];
+    $nohp = $_POST['nohp'];
     $username = $_POST['username'];
     $password = $_POST['password'];
     //query untuk insert data
-    $sql = "INSERT INTO data_pembeli('id_pembeli', 'nama_pembeli', 'alamat', 'no_hp', 'username', 'password') VALUES ('', '$nama', '$alamat', '$nohp', '$username', '$password')";
+    $sql = "INSERT INTO `data_pembeli`(`id_pembeli`, `nama_pembeli`, `alamat`, `no_hp`, `username`, `password`) VALUES ('','$nama','$alamat','$no_hp','$username','$password')";
     //eksekusi query
     if(mysqli_query($koneksi, $sql)):
       echo 'Berhasil Menambahkan Pembeli';
@@ -16,8 +16,6 @@
     endif;
   endif;
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -244,7 +242,7 @@
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                     <button type="submit" name="tambah" class="btn btn-primary">Tambah</button>
-                </div>
+                  </div>
                 </form>
                 </div>
               </div>
