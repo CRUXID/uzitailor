@@ -260,8 +260,8 @@ require ('koneksi.php');
             </div>
           </div>
           <!-- /.card-header -->
-          <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
+          <div class="card-body table-responsive p-0" style="height: 300px;">
+            <table class="table table-head-fixed text-nowrap">
               <thead>
                 <tr>
                   <th>ID Pembeli</th>
