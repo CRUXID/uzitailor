@@ -238,8 +238,7 @@
                 //call koneksi.php
                 include 'koneksi.php';
                 //mysqli_query untuk menjalankan query
-                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi, transaksi.waktu, tanggal_jadi, 
-                status_transaksi FROM status JOIN transaksi ON transaksi.kode_transaksi=status.kode_transaksi WHERE status_transaksi!='Selesai'");
+                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi,transaksi.waktu, transaksi.tgl_jadi, status.nama_status FROM transaksi JOIN status ON transaksi.status = status.id_status WHERE transaksi.status != 3");
                 //no
                 $no = 1;
                 //while untuk menampilkan data
@@ -248,8 +247,8 @@
                         <td><?php echo $no;?></td>
                         <td><?php echo $d['kode_transaksi']; ?></td>
                         <td><?php echo $d['waktu']; ?></td>
-                        <td><?php echo $d['tanggal_jadi']; ?></td>
-                        <td><?php echo $d['status_transaksi']; ?></td>
+                        <td><?php echo $d['tgl_jadi']; ?></td>
+                        <td><?php echo $d['nama_status']; ?></td>
                     </tr>
                 <?php
                 $no++;
