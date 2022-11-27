@@ -1,12 +1,13 @@
 <?php 
   require ('koneksi.php');
   if($_SERVER['REQUEST_METHOD']=='POST'):
-    $idpembeli = $_POST['id'];
-    $namapembeli = $_POST['nama'];
+    $nama = $_POST['nama'];
     $alamat = $_POST['alamat'];
     $no_hp = $_POST['nohp'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
     //query untuk insert data
-    $sql = "INSERT INTO data_pembeli (id_pembeli, nama_pembeli, alamat, no_hp) VALUES ('$idpembeli', '$namapembeli', '$alamat', '$no_hp')";
+    $sql = "INSERT INTO data_pembeli('id_pembeli', 'nama_pembeli', 'alamat', 'no_hp', 'username', 'password') VALUES ('', '$nama', '$alamat', '$nohp', '$username', '$password')";
     //eksekusi query
     if(mysqli_query($koneksi, $sql)):
       echo 'Berhasil Menambahkan Pembeli';
@@ -220,8 +221,12 @@
                 <div class="modal-body">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                   <div class="form-group">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" name="id" placeholder="ID" required>
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" name="username" placeholder="Username" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
                   </div>
                   <div class="form-group">
                     <label for="nama">Nama Pembeli</label>
@@ -229,17 +234,16 @@
                   </div>
                   <div class="form-group">
                     <label for="alamat">Alamat</label>
-                    <input type="text" class="form-control" name="alamat" placeholder="Alamat" required>
+                    <input type="text" class="form-control" name="alamat" placeholder="Alamat Pembeli" required>
                   </div>
                   <div class="form-group">
-                    <label for="nohp">No HP</label>
-                    <input type="text" class="form-control" name="nohp" placeholder="No HP" required>
+                    <label for="nohp">No Hp</label>
+                    <input type="text" class="form-control" name="nohp" placeholder="No Hp" required>
                   </div>
-                  
                   <br>
                   <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                  <button type="submit" name="tambah" class="btn btn-primary">Tambah</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="submit" name="tambah" class="btn btn-primary">Tambah</button>
                 </div>
                 </form>
                 </div>
