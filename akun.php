@@ -11,7 +11,7 @@
     $tempname = $_FILES["uploadfile"]["tmp_name"];
     $folder = "./image/" . $filename;
     //query untuk insert data
-    $sql = "INSERT INTO `karyawan` (`id_karyawan`, `username`, `nama_karyawan`, `alamat_karyawan`, `jenis_kelamin`, `no_hp`, `foto_profil`, `password`, `level`) VALUES ('', '$username', '$namakaryawan', '$alamat', $kelamin', '$no_hp', '$filename', '$password', 'Karyawan')";
+    $sql = "INSERT INTO `karyawan` (`id_karyawan`, `username`, `nama_karyawan`, `alamat_karyawan`, `jenis_kelamin`, `no_hp`, `foto_profil`, `password`, `level`) VALUES ('', '$username', '$namakaryawan', '$alamat', '$kelamin', '$no_hp', '$filename', '$password', 'Karyawan')";
     if (move_uploaded_file($tempname, $folder))  {
       $msg = "Image uploaded successfully";
     }else{
@@ -19,6 +19,7 @@
     }
     //eksekusi query
     if(mysqli_query($koneksi, $sql)):
+      move_uploaded_file($tempname, $folder);
       echo 'Berhasil Menambahkan Pembeli';
     else:
       echo 'Gagal Menambahkan Pembeli';
@@ -248,7 +249,6 @@
                         <select class="form-control" name="kelamin">
                           <option>Laki - Laki</option>
                           <option>Perempuan</option>
-                          <option>Lainnya</option>
                         </select>
                   </div>
                   <div class="form-group">
