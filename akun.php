@@ -234,7 +234,7 @@
                   </div>
                   <div class="form-group">
                     <label for="nohp">Password</label>
-                    <input type="text" class="form-control" name="password" placeholder="Password" required>
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
                   </div>
                   <div class="form-group">
                     <label for="id">Nama Karyawan </label>
