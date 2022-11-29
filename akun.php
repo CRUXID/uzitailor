@@ -1,4 +1,10 @@
 <?php 
+  session_start();
+  
+  if (!isset($_SESSION['username'])) {
+      header("Location: index.php");
+  }
+  
   require ('koneksi.php');
   if($_SERVER['REQUEST_METHOD']=='POST'):
     $username = $_POST['username'];
@@ -109,14 +115,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
-        </div>
-      </div>
+      <?php require 'profile.php';?>
 
       <!-- SidebarSearch Form -->
       <div class="form-inline">
@@ -136,7 +135,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="index.php" class="nav-link">
+            <a href="transaksi.php" class="nav-link">
               <i class="nav-icon fas fa-shopping-cart"></i>
               <p>
                 Transaksi
@@ -253,7 +252,7 @@
                   </div>
                   <div class="form-group">
                     <label for="nohp">No HP</label>
-                    <input type="text" class="form-control" name="no_hp" placeholder="No HP" required>
+                    <input type="number" class="form-control" name="no_hp" placeholder="No HP" required>
                   </div>
                   <div class="form-group">
                     <label for="uploadfile">Foto Profil</label>
@@ -311,6 +310,7 @@
                   <th>Jenis Kelamin</th>
                   <th>No Hp</th>
                   <th>Level</th>
+                  <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -318,7 +318,7 @@
                 //call koneksi.php
                 include 'koneksi.php';
                 //mysqli_query untuk menjalankan query
-                $data = mysqli_query($koneksi,"select username, nama_karyawan, alamat_karyawan, jenis_kelamin, no_hp, level from karyawan where level != 'Admin'");
+                $data = mysqli_query($koneksi,"select id_karyawan, username, nama_karyawan, alamat_karyawan, jenis_kelamin, no_hp, level from karyawan where level != 'Admin'");
                 //no
                 $no = 1;
                 //while untuk menampilkan data
@@ -329,6 +329,10 @@
                         <td><?php echo $d['jenis_kelamin']; ?></td>
                         <td><?php echo $d['no_hp']; ?></td>
                         <td><?php echo $d['level']; ?></td>
+                        <td>
+                          <a href="edit.php?id_karyawan=<?php echo $d['id_karyawan']; ?>" class="btn btn-warning">Edit</a>
+                          <a href="./delete/delete_akun.php?id_karyawan=<?php echo $d['id_karyawan']; ?>" class="btn btn-danger">Hapus</a>
+                        </td>
                     </tr>
                 <?php
                     }

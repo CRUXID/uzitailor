@@ -1,4 +1,10 @@
 <?php 
+  session_start();
+  
+  if (!isset($_SESSION['username'])) {
+      header("Location: index.php");
+  }
+  
   require ('koneksi.php');
   if($_SERVER['REQUEST_METHOD']=='POST'):
     $kodebarang = $_POST['kode'];
@@ -98,14 +104,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
-        </div>
-      </div>
+      <?php require 'profile.php';?>
 
       <!-- SidebarSearch Form -->
       <div class="form-inline">
@@ -125,7 +124,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="index.php" class="nav-link">
+            <a href="transaksi.php" class="nav-link">
               <i class="nav-icon fas fa-shopping-cart"></i>
               <p>
                 Transaksi
@@ -302,7 +301,7 @@
                     <td><?php echo $d['harga']; ?></td>
                     <td>
                         <a href="edit.php?kode_barang=<?php echo $d['kode_barang']; ?>" class="btn btn-warning">Edit</a>
-                        <a href="hapus.php?kode_barang=<?php echo $d['kode_barang']; ?>" class="btn btn-danger">Hapus</a>
+                        <a href="./delete/delete_barang.php?kode_barang=<?php echo $d['kode_barang']; ?>" class="btn btn-danger">Hapus</a>
                     </td>
                 </tr>
                 <?php 
