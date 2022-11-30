@@ -16,17 +16,21 @@
     $filename = $_FILES["uploadfile"]["name"];
     $tempname = $_FILES["uploadfile"]["tmp_name"];
     $folder = "./image/" . $filename;
-    //query untuk insert data
-    $sql = "INSERT INTO `karyawan` (`id_karyawan`, `username`, `nama_karyawan`, `alamat_karyawan`, `jenis_kelamin`, `no_hp`, `foto_profil`, `password`, `level`) VALUES ('', '$username', '$namakaryawan', '$alamat', '$kelamin', '$no_hp', '$filename', '$password', 'Karyawan')";
-    if (move_uploaded_file($tempname, $folder))  {
-      $msg = "Image uploaded successfully";
-    }else{
-      $msg = "Failed to upload image";
+    if(isset($_POST['level'])) {
+      $level = $_POST['level'];
+      if ($level == "Admin") {
+        $level = '1';
+      } else if ($level = "Karyawan") {
+        $level = '2';
+      }
     }
+    //query untuk insert data
+    $sql = "INSERT INTO `karyawan` (`id_karyawan`, `username`, `nama_karyawan`, `alamat_karyawan`, `jenis_kelamin`, `no_hp`, `foto_profil`, `password`, `level`) VALUES ('', '$username', '$namakaryawan', '$alamat', '$kelamin', '$no_hp', '$filename', '$password', '$level')";
     //eksekusi query
     if(mysqli_query($koneksi, $sql)):
       move_uploaded_file($tempname, $folder);
       echo 'Berhasil Menambahkan Pembeli';
+      header("Location: akun.php");
     else:
       echo 'Gagal Menambahkan Pembeli';
     endif;
@@ -232,6 +236,13 @@
                     <div class="form-group">
                       <input class="form-control" type="file" name="uploadfile" value="" />
                     </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Level</label>
+                    <select class="form-control" name="level">
+                      <option>Admin</option>
+                      <option>Karyawan</option>
+                    </select>
                   </div>
                   <br>
                   <div class="modal-footer">
