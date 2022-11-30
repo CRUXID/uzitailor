@@ -178,41 +178,41 @@
             <br>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add">
               Tambah</button>
-          <!-- Modal -->
-          <div class="modal fade" id="modal-add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"><b>Tambah Barang</b></h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                  <div class="form-group">
-                    <label for="kode">Kode Barang</label>
-                    <input type="text" class="form-control" name="kode" placeholder="Kode Barang" required>
+            <!-- Modal -->
+            <div class="modal fade" id="modal-add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Tambah Barang</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                   </div>
-                  <div class="form-group">
-                    <label for="nama">Nama Barang</label>
-                    <input type="text" class="form-control" name="nama" placeholder="Nama Barang" required>
+                  <div class="modal-body">
+                  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                    <div class="form-group">
+                      <label for="kode">Kode Barang</label>
+                      <input type="text" class="form-control" name="kode" placeholder="Kode Barang" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="nama">Nama Barang</label>
+                      <input type="text" class="form-control" name="nama" placeholder="Nama Barang" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="harga">Harga Barang</label>
+                      <input type="number" class="form-control" name="harga" placeholder="Harga Barang" required>
+                    </div>
+                    <br>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="submit" name="tambah" class="btn btn-primary">Tambah</button>
                   </div>
-                  <div class="form-group">
-                    <label for="harga">Harga Barang</label>
-                    <input type="number" class="form-control" name="harga" placeholder="Harga Barang" required>
+                  </form>
                   </div>
-                  <br>
-                  <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                  <button type="submit" name="tambah" class="btn btn-primary">Tambah</button>
-                </div>
-                </form>
                 </div>
               </div>
-            </div>
-            </div>
-          <!-- Modal -->
+              </div>
+            <!-- Modal -->
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -273,9 +273,44 @@
                     <td><?php echo $d['nama_barang']; ?></td>
                     <td><?php echo $d['harga']; ?></td>
                     <td>
-                        <a href="edit.php?kode_barang=<?php echo $d['kode_barang']; ?>" class="btn btn-warning">Edit</a>
+                        <a href="" class="btn btn-warning" data-toggle="modal" data-target="#modal<?php echo $d['kode_barang']; ?>">Edit</a>
                         <a href="./delete/delete_barang.php?kode_barang=<?php echo $d['kode_barang']; ?>" class="btn btn-danger">Hapus</a>
-                    </td>
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal<?php echo $d['kode_barang']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel"><b>Edit Barang</b></h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                <form action="./edit_barang.php" method="POST">
+                                  <div class="form-group">
+                                    <label for="kode">Kode Barang</label>
+                                    <input type="text" class="form-control" name="kode" placeholder="Kode Barang" value="<?php echo $d['kode_barang']; ?>" required>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="nama">Nama Barang</label>
+                                    <input type="text" class="form-control" name="nama" placeholder="Nama Barang" value="<?php echo $d['nama_barang']; ?>" required>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="harga">Harga Barang</label>
+                                    <input type="number" class="form-control" name="harga" placeholder="Harga Barang" value="<?php echo $d['harga']; ?>" required>
+                                  </div>
+                                  <br>
+                                  <div class="modal-footer">
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                  <button type="submit" name="tambah" class="btn btn-warning">Edit</button>
+                                </div>
+                                </form>
+                                </div>
+                              </div>
+                            </div>
+                            </div>
+                        <!-- Modal -->
+                      </td>
                 </tr>
                 <?php 
                     $no++;

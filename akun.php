@@ -16,8 +16,9 @@
     $filename = $_FILES["uploadfile"]["name"];
     $tempname = $_FILES["uploadfile"]["tmp_name"];
     $folder = "./image/" . $filename;
+    $level = $_POST['level'];
     //query untuk insert data
-    $sql = "INSERT INTO `karyawan` (`id_karyawan`, `username`, `nama_karyawan`, `alamat_karyawan`, `jenis_kelamin`, `no_hp`, `foto_profil`, `password`, `level`) VALUES ('', '$username', '$namakaryawan', '$alamat', '$kelamin', '$no_hp', '$filename', '$password', 'Karyawan')";
+    $sql = "INSERT INTO `karyawan` (`id_karyawan`, `username`, `nama_karyawan`, `alamat_karyawan`, `jenis_kelamin`, `no_hp`, `foto_profil`, `password`, `level`) VALUES ('', '$username', '$namakaryawan', '$alamat', '$kelamin', '$no_hp', '$filename', '$password', '$level')";
     if (move_uploaded_file($tempname, $folder))  {
       $msg = "Image uploaded successfully";
     }else{
@@ -232,6 +233,13 @@
                     <div class="form-group">
                       <input class="form-control" type="file" name="uploadfile" value="" />
                     </div>
+                  </div>
+                  <div class="form-group">
+                        <label>Level</label>
+                        <select class="form-control" name="level">
+                          <option>Admin</option>
+                          <option>Karyawan</option>
+                        </select>
                   </div>
                   <br>
                   <div class="modal-footer">
