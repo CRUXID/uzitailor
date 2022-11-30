@@ -268,7 +268,7 @@
                 //call koneksi.php
                 include 'koneksi.php';
                 //mysqli_query untuk menjalankan query
-                $data = mysqli_query($koneksi,"SELECT id_pembeli, nama_pembeli,alamat,no_hp FROM data_pembeli");
+                $data = mysqli_query($koneksi,"SELECT id_pembeli, nama_pembeli,alamat,no_hp,username,password FROM data_pembeli");
                 //no
                 $no = 1;
                 //while untuk menampilkan data
@@ -278,8 +278,51 @@
                         <td><?php echo $d['alamat']; ?></td>
                         <td><?php echo $d['no_hp']; ?></td>
                         <td>
-                          <a href="./edit/edit.php?id_pembeli=<?php echo $d['id_pembeli']; ?>" class="btn btn-warning">Edit</a>
+                        <a href="" class="btn btn-warning" data-toggle="modal" data-target="#modal<?php echo $d['id_pembeli']; ?>">Edit</a>
                           <a href="./delete/delete_pembeli.php?id_pembeli=<?php echo $d['id_pembeli']; ?>" class="btn btn-danger">Hapus</a>
+                          <!-- Modal -->
+                        <div class="modal fade" id="modal<?php echo $d['id_pembeli']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel"><b>Edit Barang</b></h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                <form action="./edit/edit_pembeli.php" method="POST">
+                                <div class="form-group">
+                                      <label for="username">Username</label>
+                                      <input type="text" class="form-control" name="username" placeholder="Username"  value="<?php echo $d['username']; ?>"required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="password">Password</label>
+                                      <input type="password" class="form-control" name="password" placeholder="Password"  value="<?php echo $d['password']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="nama">Nama Pembeli</label>
+                                      <input type="text" class="form-control" name="nama" placeholder="Nama Pembeli"  value="<?php echo $d['nama_pembeli']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="alamat">Alamat</label>
+                                      <input type="text" class="form-control" name="alamat" placeholder="Alamat Pembeli"  value="<?php echo $d['alamat']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="nohp">No Hp</label>
+                                      <input type="number" class="form-control" name="nohp" placeholder="No Hp"  value="<?php echo $d['no_hp']; ?>"required>
+                                    </div>
+                                    <br>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                      <button type="submit" name="tambah" class="btn btn-warning">Edit</button>
+                                    </div>
+                                </form>
+                                </div>
+                              </div>
+                            </div>
+                            </div>
+                        <!-- Modal -->
                         </td>
                     </tr>
                 <?php

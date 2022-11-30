@@ -218,7 +218,42 @@
                         <td><?php echo $d['tgl_jadi']; ?></td>
                         <td><?php echo $d['nama_status']; ?></td>
                         <td>
-                        <a href="lunas.php?kode_transaksi=<?php echo $d['kode_transaksi']; ?>" class="btn btn-success">Pelunasan</a>
+                          <a href="" class="btn btn-success" data-toggle="modal" data-target="#modal<?php echo $d['kode_transaksi']; ?>">Pelunasan</a>
+                          <!-- Modal -->
+                          <div class="modal fade" id="modal<?php echo $d['kode_transaksi']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><b>Pelunasan</b></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                  <form action="./edit/lunas.php" method="POST">
+                                    <div class="form-group">
+                                      <label for="kode">Kode Transaksi</label>
+                                      <input type="text" class="form-control" name="kode" placeholder="Kode Transaksi" value="<?php echo $d['kode_transaksi']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="beli">Tanggal Beli</label>
+                                      <input type="text" class="form-control" name="beli" placeholder="Waktu Pembelian" value="<?php echo $d['waktu']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="jadi">Tanggal Jadi</label>
+                                      <input type="text" class="form-control" name="jadi" placeholder="Tanggal Jadi" value="<?php echo $d['tgl_jadi']; ?>" required>
+                                    </div>
+                                    <br>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                    <button type="submit" name="lunas" class="btn btn-success">Submit</button>
+                                  </div>
+                                  </form>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                        <!-- Modal -->
                         </td>
                     </tr>
                 <?php

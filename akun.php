@@ -16,9 +16,8 @@
     $filename = $_FILES["uploadfile"]["name"];
     $tempname = $_FILES["uploadfile"]["tmp_name"];
     $folder = "./image/" . $filename;
-    $level = $_POST['level'];
     //query untuk insert data
-    $sql = "INSERT INTO `karyawan` (`id_karyawan`, `username`, `nama_karyawan`, `alamat_karyawan`, `jenis_kelamin`, `no_hp`, `foto_profil`, `password`, `level`) VALUES ('', '$username', '$namakaryawan', '$alamat', '$kelamin', '$no_hp', '$filename', '$password', '$level')";
+    $sql = "INSERT INTO `karyawan` (`id_karyawan`, `username`, `nama_karyawan`, `alamat_karyawan`, `jenis_kelamin`, `no_hp`, `foto_profil`, `password`, `level`) VALUES ('', '$username', '$namakaryawan', '$alamat', '$kelamin', '$no_hp', '$filename', '$password', 'Karyawan')";
     if (move_uploaded_file($tempname, $folder))  {
       $msg = "Image uploaded successfully";
     }else{
@@ -234,13 +233,6 @@
                       <input class="form-control" type="file" name="uploadfile" value="" />
                     </div>
                   </div>
-                  <div class="form-group">
-                        <label>Level</label>
-                        <select class="form-control" name="level">
-                          <option>Admin</option>
-                          <option>Karyawan</option>
-                        </select>
-                  </div>
                   <br>
                   <div class="modal-footer">
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
@@ -311,7 +303,6 @@
                         <td><?php echo $d['no_hp']; ?></td>
                         <td><?php echo $d['level']; ?></td>
                         <td>
-                          <a href="edit.php?id_karyawan=<?php echo $d['id_karyawan']; ?>" class="btn btn-warning">Edit</a>
                           <a href="./delete/delete_akun.php?id_karyawan=<?php echo $d['id_karyawan']; ?>" class="btn btn-danger">Hapus</a>
                         </td>
                     </tr>

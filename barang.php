@@ -286,7 +286,7 @@
                                   </button>
                                 </div>
                                 <div class="modal-body">
-                                <form action="./edit_barang.php" method="POST">
+                                <form action="./edit/edit_barang.php" method="POST">
                                   <div class="form-group">
                                     <label for="kode">Kode Barang</label>
                                     <input type="text" class="form-control" name="kode" placeholder="Kode Barang" value="<?php echo $d['kode_barang']; ?>" required>
