@@ -1,47 +1,25 @@
-<?php 
-  require ('../koneksi.php');
+<?php
 
-  $return["error"] = false;
-  $return["message"] = "";
-  $return["success"] = false;
+require ('../koneksi.php');
 
-  if(isset($_POST["username"]) && isset($_POST["password"])){
-       //checking if there is POST data
-       $username = $_POST['username'];
-       $password = $_POST['password'];
+if($_SERVER['REQUEST_METHOD'] == "POST"){
+    $response = array();
+    $email = $_POST['email'];
+    $password = md5($_POST['password']);
+    
+    $cek = "SELECT * FROM users WHERE email='$email' and password='$password'";
+    $result = mysqli_fetch_array(mysqli_query($con, $cek));
 
-       $username = mysqli_real_escape_string($koneksi, $username);
-       //escape inverted comma query conflict from string
+    if(isset($result)){
+        $response['value'] = 1;
+        $response['message'] = 'Login Berhasil';
+        echo json_encode($response);
 
-       $sql = "SELECT * FROM data_pembeli WHERE username = '$username'";
-       //building SQL query
-       $res = mysqli_query($koneksi, $sql);
-       $numrows = mysqli_num_rows($res);
-       //check if there is any row
-       if($numrows > 0){
-           //is there is any data with that username
-           $obj = mysqli_fetch_object($res);
-           //get row as object
-           if(md5($password) == $obj->password){
-               $return["success"] = true;
-               $return["message"] = "JANCOK";
-           }else{
-               $return["error"] = true;
-               $return["message"] = "Your Password is Incorrect.";
-           }
-       }else{
-           $return["error"] = true;
-           $return["message"] = 'No username found.';
-       }
-  }else{
-      $return["error"] = true;
-      $return["message"] = 'Send all parameters.';
-  }
+    } else{
+            $response['value'] = 0;
+            $response['message'] = "login gagal";
+            echo json_encode($response);
+        }
+    }
 
-  mysqli_close($koneksi);
-
-  header('Content-Type: application/json');
-  // tell browser that its a json data
-  echo json_encode($return);
-  //converting array to JSON string
 ?>
