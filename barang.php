@@ -35,7 +35,6 @@
         }
       })
     </script>";
-    mysqli_close($koneksi);
     else:
       echo "<script type='text/javascript'>
       Swal.fire({
@@ -50,6 +49,7 @@
       })
     </script>";
     endif;
+    mysqli_close($koneksi);
   endif;
 ?>
 <div class="wrapper">
