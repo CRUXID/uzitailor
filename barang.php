@@ -1,3 +1,12 @@
+<?php require ('header.php'); ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Uzi Tailor | Master Barang</title>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed accent-danger">
 <?php 
   session_start();
   
@@ -14,40 +23,35 @@
     $sql = "INSERT INTO master_barang (kode_barang, nama_barang, harga) VALUES ('$kodebarang', '$namabarang', '$hargabarang')";
     //eksekusi query
     if(mysqli_query($koneksi, $sql)):
-      echo 'Berhasil Menambahkan Barang';
+      echo "<script type='text/javascript'>
+      Swal.fire({
+        title: 'Berhasil',
+        text: 'Data berhasil ditambahkan',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.value) {
+          header('Location: barang.php');
+        }
+      })
+    </script>";
+    mysqli_close($koneksi);
     else:
-      echo 'Gagal Menambahkan Barang';
+      echo "<script type='text/javascript'>
+      Swal.fire({
+        title: 'Gagal',
+        text: 'Data gagal ditambahkan',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.value) {
+          header('Location: barang.php');
+        }
+      })
+    </script>";
     endif;
   endif;
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Uzi Tailor | Master Barang</title>
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <!-- IonIcons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
-  <!-- Sweet Alert -->
-  <link rel="stylesheet" href="plugins/sweetalert2/sweetalert2.min.css">
-</head>
-<!--
-`body` tag options:
-
-  Apply one or more of the following classes to to the body tag
-  to get the desired effect
-
-  * sidebar-collapse
-  * sidebar-mini
--->
-<body class="hold-transition sidebar-mini layout-fixed accent-danger">
 <div class="wrapper">
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -60,7 +64,6 @@
         <a href="index.html" class="nav-link">Transaksi</a>
       </li>
     </ul>
-
     <!-- Right navbar links -->
     <?php require 'navbar.php' ?>
   </nav>
@@ -333,30 +336,8 @@
     <!-- Control sidebar content goes here -->
   </aside>
   <!-- /.control-sidebar -->
-
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2022 <a href="https://instagram.com/cruxproid">CRUX MEDIA INDONESIA</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 1.1.0
-    </div>
-  </footer>
+  <?php include 'footer.php' ?>
 </div>
 <!-- ./wrapper -->
-
-<!-- REQUIRED SCRIPTS -->
-
-<!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="plugins/sweetalert2/sweetalert2.min.js"></script>
-<!-- AdminLTE -->
-<script src="dist/js/adminlte.js"></script>
-<!-- OPTIONAL SCRIPTS -->
-<script src="plugins/chart.js/Chart.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard3.js"></script>
 </body>
 </html>
