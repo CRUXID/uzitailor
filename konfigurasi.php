@@ -4,19 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Uzi Tailor | Master Akun</title>
-
-  
+  <title>Uzi Tailor | Master Akun</title>  
 </head>
-<!--
-`body` tag options:
 
-  Apply one or more of the following classes to to the body tag
-  to get the desired effect
-
-  * sidebar-collapse
-  * sidebar-mini
--->
 <body class="hold-transition sidebar-mini layout-fixed accent-danger">
 <?php
   session_start();
@@ -184,7 +174,5 @@
   <?php include 'footer.php' ?>
 </div>
 <!-- ./wrapper -->
-
-
 </body>
 </html>

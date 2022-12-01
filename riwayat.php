@@ -5,19 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Uzi Tailor | Riwayat Transaksi</title>
-
-  <!-- Google Font: Source Sans Pro -->
-  
 </head>
-<!--
-`body` tag options:
-
-  Apply one or more of the following classes to to the body tag
-  to get the desired effect
-
-  * sidebar-collapse
-  * sidebar-mini
--->
 <body class="hold-transition sidebar-mini layout-fixed accent-danger">
 <?php
   session_start();
@@ -131,7 +119,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="konfigurasi.php" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
               <p>
                 Konfigurasi
@@ -252,9 +240,5 @@
   <?php include 'footer.php' ?>
 </div>
 <!-- ./wrapper -->
-
-<!-- REQUIRED SCRIPTS -->
-
-
 </body>
 </html>

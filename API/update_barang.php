@@ -2,9 +2,9 @@
     require ('../koneksi.php');
     $kodebarang = $_POST['kode_barang']; 
     $namabarang = $_POST['nama_barang'];
-    $hargabarang      = $_POST['harga'];
+    $harga      = $_POST['harga'];
     
-    $result = mysqli_query($koneksi, "");
+    $result = mysqli_query($koneksi, "UPDATE master_barang SET kode_barang='$kodebarang',nama_barang='$namabarang',harga='$harga' WHERE kode_barang='$kodebarang'");
     
     if($result){
         echo json_encode([
