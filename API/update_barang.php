@@ -4,7 +4,7 @@
     $namabarang = $_POST['nama_barang'];
     $harga      = $_POST['harga'];
     
-    $result = mysqli_query($koneksi, "UPDATE master_barang SET kode_barang='$kodebarang',nama_barang='$namabarang',harga='$harga' WHERE kode_barang='$kodebarang'");
+    $result = mysqli_query($koneksi, "UPDATE master_barang SET nama_barang='$namabarang',harga='$harga' WHERE kode_barang='$kodebarang'");
     
     if($result){
         echo json_encode([
