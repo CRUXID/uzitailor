@@ -6,15 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Uzi Tailor | Master Akun</title>
 </head>
-<!--
-`body` tag options:
-
-  Apply one or more of the following classes to to the body tag
-  to get the desired effect
-
-  * sidebar-collapse
-  * sidebar-mini
--->
 <body class="hold-transition sidebar-mini layout-fixed accent-danger">
 <?php 
   session_start();
@@ -59,8 +50,6 @@
         }
       })
     </script>";
-      header("Location: akun.php");
-      mysqli_close($koneksi);
     else:
       echo "<script type='text/javascript'>
       Swal.fire({
@@ -74,8 +63,8 @@
         }
       })
     </script>";
-    mysqli_close($koneksi);
     endif;
+    mysqli_close($koneksi);
   endif;
 ?>
 <div class="wrapper">
@@ -357,7 +346,5 @@
   <?php include 'footer.php' ?>
 </div>
 <!-- ./wrapper -->
-
-<!-- REQUIRED SCRIPTS -->
 </body>
 </html>
