@@ -16,29 +16,12 @@
 ?>
 <div class="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="index.html" class="nav-link">Transaksi</a>
-      </li>
-    </ul>
-
-    <!-- Right navbar links -->
-    <?php require 'navbar.php' ?>
-  </nav>
-  <!-- /.navbar -->
-
+  <?php require ('navbar.php'); ?>
+  
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-danger elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link bg-danger">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
-    </a>
+    <?php require 'logo.php' ?>
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -156,73 +139,58 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-        <div class="card">
-          <div class="card-header">            
-            <div class="card-tools">
-              <div class="input-group input-group-sm" style="width: 150px;">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                  </button>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Bordered Table</h3>
                 </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th style="width: 10px">No</th>
+                        <th>Kode Transaksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1.</td>
+                        <td>Update software</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
               </div>
             </div>
+            <div class="col">
+              <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Bordered Table</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th style="width: 10px">No</th>
+                          <th>Kode Transaksi</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1.</td>
+                          <td>Update software</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+              </div>
           </div>
-          <!-- /.card-header -->
-          <div class="card-body table-responsive p-0" style="height: 400px;">
-            <table class="table table-head-fixed text-nowrap">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>User</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Reason</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>183</td>
-                  <td>John Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-success">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>219</td>
-                  <td>Alexander Pierce</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-warning">Pending</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>657</td>
-                  <td>Bob Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-primary">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>175</td>
-                  <td>Mike Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-danger">Denied</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>175</td>
-                  <td>Mike Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-danger">Denied</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
       </div>
       <!-- /.container-fluid -->
     </div>
