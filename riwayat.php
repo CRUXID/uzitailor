@@ -142,9 +142,6 @@
           <div class="row">
             <div class="col-sm-4">
               <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Bordered Table</h3>
-                </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table class="table table-bordered">
@@ -155,10 +152,23 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <?php 
+                        //call koneksi.php
+                        include 'koneksi.php';
+                        //mysqli_query untuk menjalankan query
+                        $data = mysqli_query($koneksi,"SELECT kode_transaksi FROM transaksi");
+                        //no
+                        $no = 1;
+                        //while untuk menampilkan data
+                        while($d = mysqli_fetch_array($data)){
+                      ?>
                       <tr>
-                        <td>1.</td>
-                        <td>Update software</td>
-                      </tr>
+                        <td><?php echo $no ?></td>
+                        <td><?php echo $d['kode_transaksi']; ?></td>
+                        <?php 
+                          $no++;
+                          }
+                        ?>
                     </tbody>
                   </table>
                 </div>
@@ -167,16 +177,18 @@
             </div>
             <div class="col">
               <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">Bordered Table</h3>
-                  </div>
                   <!-- /.card-header -->
                   <div class="card-body">
                     <table class="table table-bordered">
                       <thead>
                         <tr>
-                          <th style="width: 10px">No</th>
                           <th>Kode Transaksi</th>
+                          <th>Kode Barang</th>
+                          <th>QTY</th>
+                          <th>Karyawan</th>
+                          <th>Pembeli</th>
+                          <th>Waktu</th>
+                          <th>Sub Total</th>
                         </tr>
                       </thead>
                       <tbody>
