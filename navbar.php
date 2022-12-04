@@ -8,8 +8,8 @@
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <button type="button" class="btn btn-danger swalDefaultSuccess">Logout</button>
+      <li class="nav-item">
+          <button type="button" class="btn btn-danger swalDefaultSuccess"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
         <script>
           $(function() {
             $('.swalDefaultSuccess').click(function() {
