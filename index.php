@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Uzi Tailor | Log in</title>
+</head>
+<body class="hold-transition login-page">
 <?php 
 require ('header.php');
 session_start();
@@ -11,20 +19,27 @@ session_start();
     if ($result->num_rows > 0):
         $row = mysqli_fetch_assoc($result);
         $_SESSION['username'] = $row['username'];
-        header("Location: transaksi.php");
+        echo "<script type='text/javascript'>
+          Swal.fire({
+            title: 'Berhasil',
+            text: 'Berhasil Login',
+            icon: 'success',
+          })
+          setTimeout(function() {
+            window.location.href = 'transaksi.php';
+          }, 1000);
+        </script>";
     else:
-        echo "<script>alert('Email atau password Anda salah. Silahkan coba lagi!')</script>";
+      echo "<script type='text/javascript'>
+        Swal.fire({
+          title: 'Gagal',
+          text: 'Gagal Login',
+          icon: 'error',
+        })
+      </script>";
     endif;
 endif;
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Uzi Tailor | Log in</title>
-</head>
-<body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
     <a href="index.php"><b>Uzi</b>Tailor</a>
@@ -52,17 +67,13 @@ endif;
           </div>
         </div>
         <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Remember Me
-              </label>
-            </div>
+          <div class="col-4">
+          </div>
+          <div class="col-4">
+          <button type="submit" class="btn btn-primary btn-block">Login</button>
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
           </div>
           <!-- /.col -->
         </div>

@@ -268,8 +268,8 @@
                         <td><?php echo $d['alamat']; ?></td>
                         <td><?php echo $d['no_hp']; ?></td>
                         <td>
-                        <a href="" class="btn btn-warning" data-toggle="modal" data-target="#modal<?php echo $d['id_pembeli']; ?>">Edit</a>
-                          <a href="./delete/delete_pembeli.php?id_pembeli=<?php echo $d['id_pembeli']; ?>" class="btn btn-danger">Hapus</a>
+                        <a href="" class="btn btn-warning" data-toggle="modal" data-target="#modal<?php echo $d['id_pembeli']; ?>"><i class="nav-icon fa fa-pencil"></i></a>
+                          <a href="./delete/delete_pembeli.php?id_pembeli=<?php echo $d['id_pembeli']; ?>" class="btn btn-danger"><i class="nav-icon fa fa-trash"></i></a>
                           <!-- Modal -->
                         <div class="modal fade" id="modal<?php echo $d['id_pembeli']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">

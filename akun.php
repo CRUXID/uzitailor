@@ -302,7 +302,7 @@
                         <td><?php echo $d['no_hp']; ?></td>
                         <td><?php echo $d['level']; ?></td>
                         <td>
-                          <a href="./delete/delete_akun.php?id_karyawan=<?php echo $d['id_karyawan']; ?>" class="btn btn-danger">Hapus</a>
+                          <a href="./delete/delete_akun.php?id_karyawan=<?php echo $d['id_karyawan']; ?>" class="btn btn-danger"><i class="nav-icon fa fa-trash"></i></a>
                         </td>
                     </tr>
                 <?php
