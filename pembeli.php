@@ -269,7 +269,34 @@
                         <td><?php echo $d['no_hp']; ?></td>
                         <td>
                         <a href="" class="btn btn-warning" data-toggle="modal" data-target="#modal<?php echo $d['id_pembeli']; ?>"><i class="nav-icon fa fa-pencil"></i></a>
-                          <a href="./delete/delete_pembeli.php?id_pembeli=<?php echo $d['id_pembeli']; ?>" class="btn btn-danger"><i class="nav-icon fa fa-trash"></i></a>
+                        <button type="button" class="btn btn-danger delete"><i class="nav-icon fa fa-trash"></i></button>
+                        <script>
+                          $(function() {
+                            $('.delete').click(function() {
+                              Swal.fire({
+                                title: "Hapus Data Pembeli",
+                                text: "Apakah yakin anda ingin Hapus ?",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonClass: "btn-danger",
+                                confirmButtonText: "Ya, Hapus!",
+                                closeOnConfirm: false
+                              }).then((result) => {
+                                if (result.value) {
+                                  Swal.fire(
+                                    'Berhasil !',
+                                    'berhasil Hapus Data.',
+                                    'success'
+                                  )
+                                  //add delay time
+                                  setTimeout(function() {
+                                    window.location.href = './delete/delete_pembeli.php?id_pembeli=<?php echo $d['id_pembeli']; ?>';
+                                  }, 1000);
+                                }
+                              })
+                            });
+                          });
+                        </script>
                           <!-- Modal -->
                         <div class="modal fade" id="modal<?php echo $d['id_pembeli']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
