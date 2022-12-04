@@ -139,70 +139,63 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="card">
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th style="width: 10px">No</th>
-                        <th>Kode Transaksi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php 
-                        //call koneksi.php
-                        include 'koneksi.php';
-                        //mysqli_query untuk menjalankan query
-                        $data = mysqli_query($koneksi,"SELECT kode_transaksi FROM transaksi");
-                        //no
-                        $no = 1;
-                        //while untuk menampilkan data
-                        while($d = mysqli_fetch_array($data)){
-                      ?>
-                      <tr>
-                        <td><?php echo $no ?></td>
-                        <td><?php echo $d['kode_transaksi']; ?></td>
-                        <?php 
-                          $no++;
-                          }
-                        ?>
-                    </tbody>
-                  </table>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-tools">
+              <div class="input-group input-group-sm" style="width: 150px;">
+                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                  </button>
                 </div>
-                <!-- /.card-body -->
               </div>
             </div>
-            <div class="col">
-              <div class="card">
-                  <!-- /.card-header -->
-                  <div class="card-body">
-                    <table class="table table-bordered">
-                      <thead>
-                        <tr>
-                          <th>Kode Transaksi</th>
-                          <th>Kode Barang</th>
-                          <th>QTY</th>
-                          <th>Karyawan</th>
-                          <th>Pembeli</th>
-                          <th>Waktu</th>
-                          <th>Sub Total</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>1.</td>
-                          <td>Update software</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <!-- /.card-body -->
-                </div>
-              </div>
           </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0" style="height: 400px;">
+            <table class="table table-head-fixed text-nowrap">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>No Transaksi</th>
+                  <th>Karyawan</th>
+                  <th>Pembeli</th>
+                  <th>Waktu</th>
+                  <th>Total</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+              <?php
+                //call koneksi.php
+                include 'koneksi.php';
+                //mysqli_query untuk menjalankan query
+                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi, karyawan.nama_karyawan, data_pembeli.nama_pembeli, transaksi.waktu, transaksi.total FROM transaksi JOIN karyawan ON karyawan.id_karyawan = transaksi.kode_transaksi JOIN data_pembeli ON data_pembeli.id_pembeli=transaksi.id_pembeli");
+                //no
+                $no = 1;
+                //while untuk menampilkan data
+                while($d = mysqli_fetch_array($data)){
+            ?>
+            <tr>
+                <td><?php echo $no ?></td>
+                <td><?php echo $d['kode_transaksi']; ?></td>
+                <td><?php echo $d['kode_barang']; ?></td>
+                <td><?php echo $d['nama_pembeli']; ?></td>
+                <td><?php echo $d['waktu']; ?></td>
+                <td><?php echo $d['total']; ?></td>
+                <td>
+                </td>
+            </tr>
+            <?php 
+                $no++;
+                }
+            ?> 
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
       </div>
       <!-- /.container-fluid -->
     </div>

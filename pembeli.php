@@ -269,35 +269,8 @@
                         <td><?php echo $d['no_hp']; ?></td>
                         <td>
                         <a href="" class="btn btn-warning" data-toggle="modal" data-target="#modal<?php echo $d['id_pembeli']; ?>"><i class="nav-icon fa fa-pencil"></i></a>
-                        <button type="button" class="btn btn-danger delete"><i class="nav-icon fa fa-trash"></i></button>
-                        <script>
-                          $(function() {
-                            $('.delete').click(function() {
-                              Swal.fire({
-                                title: "Hapus Data Pembeli",
-                                text: "Apakah yakin anda ingin Hapus ?",
-                                type: "warning",
-                                showCancelButton: true,
-                                confirmButtonClass: "btn-danger",
-                                confirmButtonText: "Ya, Hapus!",
-                                closeOnConfirm: false
-                              }).then((result) => {
-                                if (result.value) {
-                                  Swal.fire(
-                                    'Berhasil !',
-                                    'berhasil Hapus Data.',
-                                    'success'
-                                  )
-                                  //add delay time
-                                  setTimeout(function() {
-                                    window.location.href = './delete/delete_pembeli.php?id_pembeli=<?php echo $d['id_pembeli']; ?>';
-                                  }, 1000);
-                                }
-                              })
-                            });
-                          });
-                        </script>
-                          <!-- Modal -->
+                        <a href="./delete/delete_pembeli.php?id_pembeli=<?php echo $d['id_pembeli']; ?>" class="btn btn-danger delete"><i class="nav-icon fa fa-trash"></i></a>
+                        <!-- Modal -->
                         <div class="modal fade" id="modal<?php echo $d['id_pembeli']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                               <div class="modal-content">
@@ -368,5 +341,38 @@
   <?php include 'footer.php' ?>
 </div>
 <!-- ./wrapper -->
+<?php if(@$_SESSION['sukses']){ ?>
+    <script>
+        Swal.fire({            
+            icon: 'success',                   
+            title: 'Sukses',    
+            text: 'data berhasil dihapus',                        
+            timer: 3000,                                
+            showConfirmButton: false
+        })
+    </script>
+<?php unset($_SESSION['sukses']); } ?>
+
+<script>
+    $('.delete').on('click',function(){
+        var getLink = $(this).attr('href');
+        Swal.fire({
+            title: "Yakin hapus data?",            
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonColor: '#3085d6',
+            cancelButtonText: "Batal"
+        
+        }).then(result => {
+            //jika klik ya maka arahkan ke proses.php
+            if(result.isConfirmed){
+                window.location.href = getLink
+            }
+        })
+        return false;
+    });
+</script>
 </body>
 </html>

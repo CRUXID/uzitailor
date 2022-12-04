@@ -14,6 +14,30 @@
       header("Location: index.php");
   }
   
+  if(@$_SESSION['sukses']){
+    echo "<script>
+    Swal.fire({            
+        icon: 'success',                   
+        title: 'Sukses',    
+        text: 'data berhasil dihapus',                        
+        timer: 3000,                                
+        showConfirmButton: false
+    })
+    </script>";
+  } unset($_SESSION['sukses']);
+
+  if(@$_SESSION['edit']){
+    echo "<script>
+    Swal.fire({            
+        icon: 'success',                   
+        title: 'Sukses',    
+        text: 'data berhasil diubah',',                        
+        timer: 3000,                                
+        showConfirmButton: false
+    })
+    </script>";
+  } unset($_SESSION['edit']);
+
   require ('koneksi.php');
   if($_SERVER['REQUEST_METHOD']=='POST'):
     $username = $_POST['username'];
@@ -290,7 +314,7 @@
                 //call koneksi.php
                 include 'koneksi.php';
                 //mysqli_query untuk menjalankan query
-                $data = mysqli_query($koneksi,"select id_karyawan, username, nama_karyawan, alamat_karyawan, jenis_kelamin, no_hp, level from karyawan where level != 'Admin'");
+                $data = mysqli_query($koneksi,"select id_karyawan, username, nama_karyawan, alamat_karyawan, jenis_kelamin, no_hp, level from karyawan");
                 //no
                 $no = 1;
                 //while untuk menampilkan data
@@ -302,34 +326,7 @@
                         <td><?php echo $d['no_hp']; ?></td>
                         <td><?php echo $d['level']; ?></td>
                         <td>
-                          <button type="button" class="btn btn-danger delete"><i class="nav-icon fa fa-trash"></i></button>
-                        <script>
-                          $(function() {
-                            $('.delete').click(function() {
-                              Swal.fire({
-                                title: "Hapus Akun",
-                                text: "Apakah yakin anda ingin Hapus ?",
-                                type: "warning",
-                                showCancelButton: true,
-                                confirmButtonClass: "btn-danger",
-                                confirmButtonText: "Ya, Hapus!",
-                                closeOnConfirm: false
-                              }).then((result) => {
-                                if (result.value) {
-                                  Swal.fire(
-                                    'Berhasil !',
-                                    'berhasil Hapus Data.',
-                                    'success'
-                                  )
-                                  //add delay time
-                                  setTimeout(function() {
-                                    window.location.href = './delete/delete_akun.php?id_karyawan=<?php echo $d['id_karyawan']; ?>';
-                                  }, 1000);
-                                }
-                              })
-                            });
-                          });
-                        </script>
+                          <a href="./delete/delete_akun.php?id_karyawan=<?php echo $d['id_karyawan']; ?>" class="btn btn-danger delete"><i class="nav-icon fa fa-trash"></i></a>
                         </td>
                     </tr>
                 <?php
@@ -357,5 +354,26 @@
   <?php include 'footer.php' ?>
 </div>
 <!-- ./wrapper -->
+<script>
+    $('.delete').on('click',function(){
+        var getLink = $(this).attr('href');
+        Swal.fire({
+            title: "Yakin hapus data?",            
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonColor: '#3085d6',
+            cancelButtonText: "Batal"
+        
+        }).then(result => {
+            //jika klik ya maka arahkan ke proses.php
+            if(result.isConfirmed){
+                window.location.href = getLink
+            }
+        })
+        return false;
+    });
+</script>
 </body>
 </html>

@@ -8,18 +8,7 @@
     // query SQL untuk insert data
     $query="UPDATE master_barang SET kode_barang='$kodebarang',nama_barang='$namabarang',harga='$harga' WHERE kode_barang='$kodebarang'";
     mysqli_query($koneksi, $query);
-    echo "<script type='text/javascript'>
-      Swal.fire({
-        title: 'Berhasil',
-        text: 'Data berhasil ditambahkan',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      }).then((result) => {
-        if (result.value) {
-          header('Location: barang.php');
-        }
-      })
-    </script>";
+    $_SESSION["edit"] = 'Data Berhasil Diubah';
     // mengalihkan halaman
     header("location:../barang.php");
 ?>
