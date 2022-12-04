@@ -302,7 +302,34 @@
                         <td><?php echo $d['no_hp']; ?></td>
                         <td><?php echo $d['level']; ?></td>
                         <td>
-                          <a href="./delete/delete_akun.php?id_karyawan=<?php echo $d['id_karyawan']; ?>" class="btn btn-danger"><i class="nav-icon fa fa-trash"></i></a>
+                          <button type="button" class="btn btn-danger delete"><i class="nav-icon fa fa-trash"></i></button>
+                        <script>
+                          $(function() {
+                            $('.delete').click(function() {
+                              Swal.fire({
+                                title: "Hapus Akun",
+                                text: "Apakah yakin anda ingin Hapus ?",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonClass: "btn-danger",
+                                confirmButtonText: "Ya, Hapus!",
+                                closeOnConfirm: false
+                              }).then((result) => {
+                                if (result.value) {
+                                  Swal.fire(
+                                    'Berhasil !',
+                                    'berhasil Hapus Data.',
+                                    'success'
+                                  )
+                                  //add delay time
+                                  setTimeout(function() {
+                                    window.location.href = './delete/delete_akun.php?id_karyawan=<?php echo $d['id_karyawan']; ?>';
+                                  }, 1000);
+                                }
+                              })
+                            });
+                          });
+                        </script>
                         </td>
                     </tr>
                 <?php
