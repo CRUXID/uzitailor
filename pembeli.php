@@ -19,10 +19,8 @@
     $nama = $_POST['nama'];
     $alamat = $_POST['alamat'];
     $nohp = $_POST['nohp'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
     //query untuk insert data
-    $sql = "INSERT INTO `data_pembeli`(`id_pembeli`, `nama_pembeli`, `alamat`, `no_hp`, `username`, `password`) VALUES ('','$nama','$alamat','$nohp','$username','$password')";
+    $sql = "INSERT INTO `data_pembeli`(`id_pembeli`, `nama_pembeli`, `alamat`, `no_hp`) VALUES ('','$nama','$alamat','$nohp')";
     //eksekusi query
     if(mysqli_query($koneksi, $sql)):
       echo "<script type='text/javascript'>
@@ -180,14 +178,6 @@
                 </div>
                 <div class="modal-body">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                  <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" name="username" placeholder="Username" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password" placeholder="Password" required>
-                  </div>
                   <div class="form-group">
                     <label for="nama">Nama Pembeli</label>
                     <input type="text" class="form-control" name="nama" placeholder="Nama Pembeli" required>
