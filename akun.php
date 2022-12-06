@@ -314,7 +314,7 @@
                 //call koneksi.php
                 include 'koneksi.php';
                 //mysqli_query untuk menjalankan query
-                $data = mysqli_query($koneksi,"select id_karyawan, username, nama_karyawan, alamat_karyawan, jenis_kelamin, no_hp, level from karyawan");
+                $data = mysqli_query($koneksi,"select id_karyawan, username, nama_karyawan, alamat_karyawan, jenis_kelamin, no_hp, level from karyawan where level != 'Admin'");
                 //no
                 $no = 1;
                 //while untuk menampilkan data
