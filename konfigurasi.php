@@ -16,7 +16,7 @@
   }
 
   if(isset($_POST['update'])) {
-
+    require ('koneksi.php');
   }
 ?>
 <div class="wrapper">
