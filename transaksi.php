@@ -161,36 +161,101 @@
                 </datalist>
               </div>
             </div>
-
             <div class="col-sm-4 col-md-4 col-lg-3 mb-3">
               <label class="small text-muted mb-1">Nama Produk</label>
-              <input type="text" name="Cnproduk" id="nama_produk" class="form-control form-control-sm bg-light" readonly>
-              <input type="hidden" name="harga_modal" id="harga_modal">
+              <input type="text" name="nama" id="nama" class="form-control form-control-sm bg-light" readonly> 
             </div>
 
             <div class="col-8 col-sm-4 col-md-4 col-lg-2 mb-3">
               <label class="small text-muted mb-1">Harga</label>
-              <input type="number" name="Charga" placeholder="0" id="harga_jual" onchange="InputSub()"
+              <input type="number" name="harga" placeholder="0" id="harga" onchange="InputSub()"
               class="form-control form-control-sm bg-light" readonly>
             </div>
 
             <div class="col-4 col-sm-4 col-md-4 col-lg-1 mb-3">
               <label class="small text-muted mb-1">Qty</label>
-              <input type="number" name="Cqty" id="Iqty" onchange="InputSub()" placeholder="0" class="form-control form-control-sm" required>
+              <input type="number" name="qty" id="qty" onchange="InputSub()" placeholder="0" class="form-control form-control-sm" required>
             </div>
 
             <div class="col-sm-8 col-md-8 col-lg-3 mb-3">
               <label class="small text-muted mb-1">Subtotal</label>
               <div class="input-group">
-                <input type="number" name="Csubs" placeholder="0" id="Isubtotal" onchange="InputSub()" class="form-control form-control-sm bg-light mr-2" readonly>
-                <div class="input-group-append">
-                  <button type="reset" class="btn btn-danger btn-sm mr-2">Reset</button>
-                  <button type="submit" name="InputCart" class="btn btn-primary btn-sm">Simpan</button>
-                </div>
+                <input type="number" name="subtotal" placeholder="0" id="subtotal" onchange="InputSub()" class="form-control form-control-sm bg-light mr-2" readonly>
+              <div class="input-group-append">
+                <button type="reset" class="btn btn-danger btn-sm mr-2">Reset</button>
+                <button type="submit" name="InputCart" class="btn btn-primary btn-sm">Simpan</button>
+              </div>
               </div>
             </div>
           </div>
         </form>
+        <?php 
+          if(isset($_POST['InputCart']))
+          {
+              $kode = htmlspecialchars($_POST['kode']);
+              $nama = htmlspecialchars($_POST['nama']);
+              $harga = htmlspecialchars($_POST['harga']);
+              $qty = htmlspecialchars($_POST['qty']);
+              $subtotal = htmlspecialchars($_POST['sub_total']);
+
+              $cekDulu = mysqli_query($conn,"SELECT * FROM cart ");
+              $liat = mysqli_num_rows($cekDulu);
+              $f = mysqli_fetch_array($cekDulu);
+              $inv_c = $f['invoice'];
+              $ii = htmlspecialchars($_POST['Cqty']);
+
+              if($liat>0){
+                $cekbrg = mysqli_query($conn,"SELECT * FROM cart WHERE kode_produk='$Input1' and invoice='$inv_c'");
+                $liatlg = mysqli_num_rows($cekbrg);
+                $brpbanyak = mysqli_fetch_array($cekbrg);
+                $jmlh = $brpbanyak['qty'];
+                $jmlh1 = $brpbanyak['harga'];
+                
+                if($liatlg>0){
+                  $i = htmlspecialchars($_POST['Cqty']);
+                  $baru = $jmlh + $i;
+                  $baru1 = $jmlh1 * $baru;
+
+                  $updateaja = mysqli_query($conn,"UPDATE cart SET qty='$baru', subtotal='$baru1' WHERE invoice='$inv_c' and kode_produk='$Input1'");
+                  if($updateaja){
+                    echo '<script>window.location="index.php"</script>';
+                  } else {
+                    echo '<script>window.location="index.php"</script>';
+                  }
+                } else {
+                $tambahdata = mysqli_query($conn,"INSERT INTO cart (invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal)
+                values('$inv_c','$Input1','$Input2','$Input3','$hrg_m','$ii','$Input5')");
+                if ($tambahdata){
+                    echo '<script>window.location="index.php"</script>';
+                } else { echo '<script>window.location="index.php"</script>';
+                }
+                };
+          } else {
+            
+            $queryStar = mysqli_query($conn, "SELECT max(invoice) as kodeTerbesar FROM inv");
+            $data = mysqli_fetch_array($queryStar);
+            $kodeInfo = $data['kodeTerbesar'];
+            $urutan = (int) substr($kodeInfo, 8, 2);
+            $urutan++;
+            $huruf = "AD";
+            $oi = $huruf . date("jnyGi") . sprintf("%02s", $urutan);
+              
+              $bikincart = mysqli_query($conn,"INSERT INTO inv (invoice,pembayaran,kembalian,status) values('$oi','','','proses')");
+              if($bikincart){
+                $tambahuser = mysqli_query($conn,"INSERT INTO cart (invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal)
+                values('$oi','$Input1','$Input2','$Input3','$hrg_m','$ii','$Input5')");
+                if ($tambahuser){
+                  echo '<script>window.location="index.php"</script>';
+                } else { echo '<script>window.location="index.php"</script>';
+                }
+              } else {
+                
+              }
+          }
+          };
+          $DataInv = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM cart LIMIT 1"));
+          $noinv = $DataInv['invoice'];
+          ?>
       </div>
       <!-- /.container-fluid -->
     </div>
