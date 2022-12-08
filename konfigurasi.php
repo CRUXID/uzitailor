@@ -14,6 +14,10 @@
   if (!isset($_SESSION['username'])) {
       header("Location: index.php");
   }
+
+  if(isset($_POST['update'])) {
+
+  }
 ?>
 <div class="wrapper">
   <!-- Navbar -->
@@ -195,17 +199,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="form-group">
-                  <label>Jenis Kelamin</label>
-                  <select class="form-control" name="kelamin">
-                    <option>Laki - Laki</option>
-                    <option>Perempuan</option>
-                  </select>
-                </div>
-            </div>
         </div>
-        <button type="submit" class="btn btn-primary float-right" name="tambah">Update</button>
+        <button type="submit" class="btn btn-primary float-right" name="update">Update</button>
         </form>
         <?php } ?>
     </div>
