@@ -1,4 +1,10 @@
 <?php require ('header.php'); ?>
+<?php 
+  require ('koneksi.php');
+  $dataselect = mysqli_query($koneksi, "SELECT * FROM master_barang");
+  $jsArray = "var nama_barang = new Array();";
+  $jsArray2 = "var harga = new Array();";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -139,9 +145,52 @@
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-        <div class="row">
-          
-        </div>
+        <form method="post">
+          <div class="row">
+            <div class="col-sm-4 col-md-4 col-lg-3 mb-3">
+              <label class="small text-muted mb-1">Kode Produk</label>
+              <div class="position-relative">
+                <input type="text" name="Ckdproduk" class="form-control form-control-sm" list="datalist1" onchange="changeValue(this.value)" required autofocus>
+                <datalist id="datalist1">
+                    <?php if(mysqli_num_rows($dataselect)) {?>
+                        <?php while($row_brg= mysqli_fetch_array($dataselect)) {?>
+                            <option value="<?php echo $row_brg["kode_barang"]?>"> <?php echo $row_brg["kode_barang"]?>
+                        <?php $jsArray .= "nama_barang['" . $row_brg['nama_barang'] . "'] = {nama_barang:'" . addslashes($row_brg['nama_barang']) . "'};";
+                        $jsArray2 .= "harga['" . $row_brg['kode_barang'] . "'] = {harga:'" . addslashes($row_brg['harga']) . "'};"; } ?>
+                    <?php } ?>
+                </datalist>
+              </div>
+            </div>
+
+            <div class="col-sm-4 col-md-4 col-lg-3 mb-3">
+              <label class="small text-muted mb-1">Nama Produk</label>
+              <input type="text" name="Cnproduk" id="nama_produk" class="form-control form-control-sm bg-light" readonly>
+              <input type="hidden" name="harga_modal" id="harga_modal">
+            </div>
+
+            <div class="col-8 col-sm-4 col-md-4 col-lg-2 mb-3">
+              <label class="small text-muted mb-1">Harga</label>
+              <input type="number" name="Charga" placeholder="0" id="harga_jual" onchange="InputSub()"
+              class="form-control form-control-sm bg-light" readonly>
+            </div>
+
+            <div class="col-4 col-sm-4 col-md-4 col-lg-1 mb-3">
+              <label class="small text-muted mb-1">Qty</label>
+              <input type="number" name="Cqty" id="Iqty" onchange="InputSub()" placeholder="0" class="form-control form-control-sm" required>
+            </div>
+
+            <div class="col-sm-8 col-md-8 col-lg-3 mb-3">
+              <label class="small text-muted mb-1">Subtotal</label>
+              <div class="input-group">
+                <input type="number" name="Csubs" placeholder="0" id="Isubtotal" onchange="InputSub()" class="form-control form-control-sm bg-light mr-2" readonly>
+                <div class="input-group-append">
+                  <button type="reset" class="btn btn-danger btn-sm mr-2">Reset</button>
+                  <button type="submit" name="InputCart" class="btn btn-primary btn-sm">Simpan</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
       <!-- /.container-fluid -->
     </div>
