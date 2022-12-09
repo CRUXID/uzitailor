@@ -10,7 +10,7 @@
 <?php 
   session_start();
   
-  if (!isset($_SESSION['username'])) {
+  if (!isset($_SESSION['login'])) {
       header("Location: index.php");
   }
   
@@ -303,7 +303,6 @@
                 <tr>
                   <th>Nama</th>
                   <th>Alamat</th>
-                  <th>Jenis Kelamin</th>
                   <th>No Hp</th>
                   <th>Level</th>
                   <th>Aksi</th>
@@ -314,15 +313,14 @@
                 //call koneksi.php
                 include 'koneksi.php';
                 //mysqli_query untuk menjalankan query
-                $data = mysqli_query($koneksi,"select id_karyawan, username, nama_karyawan, alamat_karyawan, jenis_kelamin, no_hp, level from karyawan where level != 'Admin'");
+                $data = mysqli_query($koneksi,"SELECT id_karyawan, username, nama_karyawan, alamat_karyawan, no_hp, level FROM karyawan WHERE level != '1'");
                 //no
                 $no = 1;
                 //while untuk menampilkan data
                 while($d = mysqli_fetch_array($data)){
-            ?>
+              ?>
                         <td><?php echo $d['nama_karyawan']; ?></td>
                         <td><?php echo $d['alamat_karyawan']; ?></td>
-                        <td><?php echo $d['jenis_kelamin']; ?></td>
                         <td><?php echo $d['no_hp']; ?></td>
                         <td><?php echo $d['level']; ?></td>
                         <td>
