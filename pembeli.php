@@ -9,13 +9,13 @@
 <body class="hold-transition sidebar-mini layout-fixed accent-danger">
 <?php 
   session_start();
-  
+  require ('koneksi.php');
+
   if (!isset($_SESSION['login'])) {
       header("Location: index.php");
   }
   
-  require ('koneksi.php');
-  if($_SERVER['REQUEST_METHOD']=='POST'):
+  if(isset($_POST['tambah'])):
     $nama = $_POST['nama'];
     $alamat = $_POST['alamat'];
     $nohp = $_POST['nohp'];
@@ -48,6 +48,44 @@
         }
       })
     </script>";
+    endif;
+    mysqli_close($koneksi);
+  endif;
+
+  if(isset($_POST['edit'])):
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $nama      = $_POST['nama'];
+    $alamat      = $_POST['alamat'];
+    $nohp      = $_POST['nohp'];
+    // query SQL untuk insert data
+    $query="UPDATE data_pembeli SET nama_pembeli='$nama',alamat='$alamat',no_hp='$nohp', username='$username', password='$password'";
+    if(mysqli_query($koneksi, $query)):
+      echo "<script type='text/javascript'>
+        Swal.fire({
+          title: 'Berhasil',
+          text: 'Data Berhasil Diubah',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.value) {
+            header('Location: pembeli.php');
+          }
+        })
+      </script>";
+    else:
+      echo "<script type='text/javascript'>
+        Swal.fire({
+          title: 'Gagal',
+          text: 'Data Gagal Diubah',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.value) {
+            header('Location: pembeli.php');
+          }
+        })
+      </script>";
     endif;
     mysqli_close($koneksi);
   endif;
@@ -280,7 +318,7 @@
                                   </button>
                                 </div>
                                 <div class="modal-body">
-                                <form action="./edit/edit_pembeli.php" method="POST">
+                                <form method="POST">
                                 <div class="form-group">
                                       <label for="username">Username</label>
                                       <input type="text" class="form-control" name="username" placeholder="Username"  value="<?php echo $d['username']; ?>"required>
@@ -304,7 +342,7 @@
                                     <br>
                                     <div class="modal-footer">
                                       <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                                      <button type="submit" name="tambah" class="btn btn-warning">Edit</button>
+                                      <button type="submit" name="edit" class="btn btn-warning">Edit</button>
                                     </div>
                                 </form>
                                 </div>

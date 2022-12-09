@@ -262,7 +262,7 @@
           }
           };
           $DataInv = mysqli_fetch_array(mysqli_query($koneksi,"SELECT * FROM cart LIMIT 1"));
-          $noinv = $DataInv['invoice'];
+          $noinv = $DataInv['kode_transaksi'];
           ?>
       </div>
       <!-- /.container-fluid -->

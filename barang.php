@@ -9,13 +9,13 @@
 <body class="hold-transition sidebar-mini layout-fixed accent-danger">
 <?php 
   session_start();
-  
+  require ('koneksi.php');
+
   if (!isset($_SESSION['login'])) {
       header("Location: index.php");
   }
   
-  require ('koneksi.php');
-  if($_SERVER['REQUEST_METHOD']=='POST'):
+  if(isset($_POST['tambah'])):
     $kodebarang = $_POST['kode'];
     $namabarang = $_POST['nama'];
     $hargabarang = $_POST['harga'];
@@ -48,6 +48,42 @@
         }
       })
     </script>";
+    endif;
+    mysqli_close($koneksi);
+  endif;
+
+  if(isset($_POST['edit'])):
+    $kodebarang = $_POST['kode'];
+    $namabarang = $_POST['nama'];
+    $harga      = $_POST['harga'];
+    // query SQL untuk update data
+    $query="UPDATE master_barang SET kode_barang='$kodebarang',nama_barang='$namabarang',harga='$harga' WHERE kode_barang='$kodebarang'";
+    if(mysqli_query($koneksi, $query)):
+      echo "<script type='text/javascript'>
+        Swal.fire({
+          title: 'Berhasil',
+          text: 'Data Berhasil Diubah',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.value) {
+            header('Location: barang.php');
+          }
+        })
+      </script>";
+    else:
+      echo "<script type='text/javascript'>
+        Swal.fire({
+          title: 'Gagal',
+          text: 'Data Gagal Diubah',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.value) {
+            header('Location: barang.php');
+          }
+        })
+      </script>";
     endif;
     mysqli_close($koneksi);
   endif;
@@ -186,7 +222,7 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                  <form method="POST">
                     <div class="form-group">
                       <label for="kode">Kode Barang</label>
                       <input type="text" class="form-control" name="kode" placeholder="Kode Barang" required>
@@ -283,10 +319,10 @@
                                   </button>
                                 </div>
                                 <div class="modal-body">
-                                <form action="./edit/edit_barang.php" method="POST">
+                                <form method="POST">
                                   <div class="form-group">
                                     <label for="kode">Kode Barang</label>
-                                    <input type="text" class="form-control" name="kode" placeholder="Kode Barang" value="<?php echo $d['kode_barang']; ?>" required>
+                                    <input type="text" class="form-control" name="kode" placeholder="Kode Barang" value="<?php echo $d['kode_barang']; ?>" readonly>
                                   </div>
                                   <div class="form-group">
                                     <label for="nama">Nama Barang</label>
@@ -299,7 +335,7 @@
                                   <br>
                                   <div class="modal-footer">
                                   <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                                  <button type="submit" name="tambah" class="btn btn-warning">Edit</button>
+                                  <button type="submit" name="edit" class="btn btn-warning">Edit</button>
                                 </div>
                                 </form>
                                 </div>

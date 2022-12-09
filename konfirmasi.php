@@ -20,7 +20,18 @@
 
     $query="UPDATE `transaksi` SET `status`='2' WHERE kode_transaksi='$kodetrx'";
     mysqli_query($koneksi, $query);
-    header("Location: konfirmasi.php");
+    echo "<script type='text/javascript'>
+      Swal.fire({
+        title: 'Berhasil',
+        text: 'Transaksi Dikonfirmasi!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.value) {
+          header('Location: konfirmasi.php');
+        }
+      })
+    </script>";
   }
 ?>
 <div class="wrapper">
