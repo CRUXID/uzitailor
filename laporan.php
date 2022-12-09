@@ -54,9 +54,18 @@
               </p>
             </a>
           </li>
+          </li>
+          <li class="nav-item">
+            <a href="konfirmasi.php" class="nav-link">
+            <i class="nav-icon fa fa-solid fa-check"></i>
+              <p>
+                Konfirmasi Pesanan
+              </p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="progress.php" class="nav-link">
-              <i class="nav-icon fa fa-shopping-basket"></i>
+            <i class="nav-icon fa fa-shopping-basket"></i>
               <p>
                 Order on Progress
               </p>

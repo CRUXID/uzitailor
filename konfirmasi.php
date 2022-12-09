@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Uzi Tailor | Riwayat Transaksi</title>
+  <title>Uzi Tailor | Konfirmasi Pesanan</title>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed accent-danger">
 <?php
@@ -16,8 +16,9 @@
 ?>
 <div class="wrapper">
   <!-- Navbar -->
-  <?php require ('navbar.php'); ?>
-  
+  <?php require 'navbar.php' ?>
+  <!-- /.navbar -->
+
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-danger elevation-4">
     <!-- Brand Logo -->
@@ -55,7 +56,7 @@
           </li>
           </li>
           <li class="nav-item">
-            <a href="progress.php" class="nav-link">
+            <a href="konfirmasi.php" class="nav-link active">
             <i class="nav-icon fa fa-solid fa-check"></i>
               <p>
                 Konfirmasi Pesanan
@@ -87,7 +88,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="riwayat.php" class="nav-link active">
+            <a href="riwayat.php" class="nav-link">
               <i class="nav-icon fas fa-history"></i>
               <p>
                 Riwayat Transaksi
@@ -132,12 +133,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Riwayat Transaksi</h1>
+            <h1 class="m-0">Konfirmasi Pesanan</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Riwayat Transaksi</li>
+              <li class="breadcrumb-item active">Konfirmasi Pesanan</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -164,36 +165,72 @@
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0" style="height: 400px;">
             <table class="table table-head-fixed text-nowrap">
-              <thead>
+            <thead>
                 <tr>
                   <th>No</th>
-                  <th>No Transaksi</th>
-                  <th>Karyawan</th>
-                  <th>Pembeli</th>
-                  <th>Waktu</th>
-                  <th>Total</th>
+                  <th>Kode Transaksi</th>
+                  <th>Waktu Pembelian</th>
+                  <th>Tanggal Jadi</th>
+                  <th>Status</th>
                   <th>Aksi</th>
                 </tr>
-              </thead>
+              <thead>
               <tbody>
               <?php
                 //call koneksi.php
                 include 'koneksi.php';
                 //mysqli_query untuk menjalankan query
-                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi, karyawan.nama_karyawan, data_pembeli.nama_pembeli, transaksi.waktu, transaksi.total FROM transaksi JOIN karyawan ON karyawan.id_karyawan = transaksi.kode_transaksi JOIN data_pembeli ON data_pembeli.id_pembeli=transaksi.id_pembeli");
+                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi,data_pembeli.nama_pembeli, transaksi.waktu,transaksi.tgl_jadi,transaksi.total FROM transaksi
+                JOIN data_pembeli ON data_pembeli.id_pembeli = transaksi.id_pembeli 
+                WHERE transaksi.status=3");
                 //no
                 $no = 1;
                 //while untuk menampilkan data
                 while($d = mysqli_fetch_array($data)){
             ?>
             <tr>
-                <td><?php echo $no ?></td>
-                <td><?php echo $d['kode_transaksi']; ?></td>
-                <td><?php echo $d['kode_barang']; ?></td>
-                <td><?php echo $d['nama_pembeli']; ?></td>
-                <td><?php echo $d['waktu']; ?></td>
-                <td><?php echo $d['total']; ?></td>
-                <td>
+            <td><?php echo $no;?></td>
+                        <td><?php echo $d['kode_transaksi']; ?></td>
+                        <td><?php echo $d['waktu']; ?></td>
+                        <td><?php echo $d['tgl_jadi']; ?></td>
+                        <td><?php echo $d['nama_status']; ?></td>
+                        <td>
+                          <a href="" class="btn btn-success" data-toggle="modal" data-target="#modal<?php echo $d['kode_transaksi']; ?>">Konfirmasi</a>
+                          <!-- Modal -->
+                          <div class="modal fade" id="modal<?php echo $d['kode_transaksi']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><b>Konfirmasi</b></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                  <form action="./edit/lunas.php" method="POST">
+                                    <div class="form-group">
+                                      <label for="kode">Kode Transaksi</label>
+                                      <input type="text" class="form-control" name="kode" placeholder="Kode Transaksi" value="<?php echo $d['kode_transaksi']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="beli">Tanggal Beli</label>
+                                      <input type="text" class="form-control" name="beli" placeholder="Waktu Pembelian" value="<?php echo $d['waktu']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="jadi">Tanggal Jadi</label>
+                                      <input type="text" class="form-control" name="jadi" placeholder="Tanggal Jadi" value="<?php echo $d['tgl_jadi']; ?>" required>
+                                    </div>
+                                    <br>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                    <button type="submit" name="lunas" class="btn btn-success">konfirmasi</button>
+                                  </div>
+                                  </form>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                        <!-- Modal -->
                 </td>
             </tr>
             <?php 
@@ -221,6 +258,6 @@
   <!-- Main Footer -->
   <?php include 'footer.php' ?>
 </div>
-<!-- ./wrapper -->
+<!-- ./wrapper --
 </body>
 </html>

@@ -60,6 +60,14 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="konfirmasi.php" class="nav-link">
+            <i class="nav-icon fa fa-solid fa-check"></i>
+              <p>
+                Konfirmasi Pesanan
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="progress.php" class="nav-link">
               <i class="nav-icon fa fa-shopping-basket"></i>
               <p>
@@ -198,14 +206,14 @@
               $qty = htmlspecialchars($_POST['qty']);
               $subtotal = htmlspecialchars($_POST['sub_total']);
 
-              $cekDulu = mysqli_query($conn,"SELECT * FROM cart ");
+              $cekDulu = mysqli_query($koneksi,"SELECT * FROM cart ");
               $liat = mysqli_num_rows($cekDulu);
               $f = mysqli_fetch_array($cekDulu);
               $inv_c = $f['invoice'];
               $ii = htmlspecialchars($_POST['Cqty']);
 
               if($liat>0){
-                $cekbrg = mysqli_query($conn,"SELECT * FROM cart WHERE kode_produk='$Input1' and invoice='$inv_c'");
+                $cekbrg = mysqli_query($koneksi,"SELECT * FROM cart WHERE kode_produk='$Input1' and invoice='$inv_c'");
                 $liatlg = mysqli_num_rows($cekbrg);
                 $brpbanyak = mysqli_fetch_array($cekbrg);
                 $jmlh = $brpbanyak['qty'];
@@ -216,14 +224,14 @@
                   $baru = $jmlh + $i;
                   $baru1 = $jmlh1 * $baru;
 
-                  $updateaja = mysqli_query($conn,"UPDATE cart SET qty='$baru', subtotal='$baru1' WHERE invoice='$inv_c' and kode_produk='$Input1'");
+                  $updateaja = mysqli_query($koneksi,"UPDATE cart SET qty='$baru', subtotal='$baru1' WHERE invoice='$inv_c' and kode_produk='$Input1'");
                   if($updateaja){
                     echo '<script>window.location="index.php"</script>';
                   } else {
                     echo '<script>window.location="index.php"</script>';
                   }
                 } else {
-                $tambahdata = mysqli_query($conn,"INSERT INTO cart (invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal)
+                $tambahdata = mysqli_query($koneksi,"INSERT INTO cart (invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal)
                 values('$inv_c','$Input1','$Input2','$Input3','$hrg_m','$ii','$Input5')");
                 if ($tambahdata){
                     echo '<script>window.location="index.php"</script>';
@@ -232,7 +240,7 @@
                 };
           } else {
             
-            $queryStar = mysqli_query($conn, "SELECT max(invoice) as kodeTerbesar FROM inv");
+            $queryStar = mysqli_query($koneksi, "SELECT max(invoice) as kodeTerbesar FROM inv");
             $data = mysqli_fetch_array($queryStar);
             $kodeInfo = $data['kodeTerbesar'];
             $urutan = (int) substr($kodeInfo, 8, 2);
@@ -240,9 +248,9 @@
             $huruf = "AD";
             $oi = $huruf . date("jnyGi") . sprintf("%02s", $urutan);
               
-              $bikincart = mysqli_query($conn,"INSERT INTO inv (invoice,pembayaran,kembalian,status) values('$oi','','','proses')");
+              $bikincart = mysqli_query($koneksi,"INSERT INTO inv (invoice,pembayaran,kembalian,status) values('$oi','','','proses')");
               if($bikincart){
-                $tambahuser = mysqli_query($conn,"INSERT INTO cart (invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal)
+                $tambahuser = mysqli_query($koneksi,"INSERT INTO cart (invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal)
                 values('$oi','$Input1','$Input2','$Input3','$hrg_m','$ii','$Input5')");
                 if ($tambahuser){
                   echo '<script>window.location="index.php"</script>';
@@ -253,7 +261,7 @@
               }
           }
           };
-          $DataInv = mysqli_fetch_array(mysqli_query($conn,"SELECT * FROM cart LIMIT 1"));
+          $DataInv = mysqli_fetch_array(mysqli_query($koneksi,"SELECT * FROM cart LIMIT 1"));
           $noinv = $DataInv['invoice'];
           ?>
       </div>

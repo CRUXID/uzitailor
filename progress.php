@@ -56,6 +56,15 @@
               </p>
             </a>
           </li>
+          </li>
+          <li class="nav-item">
+            <a href="konfirmasi.php" class="nav-link">
+            <i class="nav-icon fa fa-solid fa-check"></i>
+              <p>
+                Konfirmasi Pesanan
+              </p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="progress.php" class="nav-link active">
               <i class="nav-icon fa fa-shopping-basket"></i>
@@ -165,7 +174,7 @@
                   <th>Kode Transaksi</th>
                   <th>Waktu Pembelian</th>
                   <th>Tanggal Jadi</th>
-                  <th>Status Transaksi</th>
+                  <th>Status</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
