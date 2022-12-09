@@ -180,9 +180,7 @@
                 //call koneksi.php
                 include 'koneksi.php';
                 //mysqli_query untuk menjalankan query
-                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi,data_pembeli.nama_pembeli, transaksi.waktu,transaksi.tgl_jadi,transaksi.total FROM transaksi
-                JOIN data_pembeli ON data_pembeli.id_pembeli = transaksi.id_pembeli 
-                WHERE transaksi.status=3");
+                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi,data_pembeli.nama_pembeli, transaksi.waktu,transaksi.tgl_jadi,transaksi.total FROM transaksi JOIN data_pembeli ON data_pembeli.id_pembeli = transaksi.id_pembeli WHERE transaksi.status=4");
                 //no
                 $no = 1;
                 //while untuk menampilkan data

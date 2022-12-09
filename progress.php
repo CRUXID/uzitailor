@@ -10,11 +10,19 @@
 <body class="hold-transition sidebar-mini layout-fixed accent-danger">
 <?php
   session_start();
-  
+  require ('koneksi.php');
+
   if (!isset($_SESSION['login'])) {
       header("Location: index.php");
   }
-  require ('koneksi.php');
+  
+  if(isset($_POST['lunas'])) {
+    $kodetrx = $_POST['kode'];
+
+    $query="UPDATE `transaksi` SET `status`='3' WHERE kode_transaksi='$kodetrx'";
+    mysqli_query($koneksi, $query);
+    header("Location: konfirmasi.php");
+  }
 ?>
 <div class="wrapper">
   <!-- Navbar -->
@@ -183,7 +191,7 @@
                 //call koneksi.php
                 include 'koneksi.php';
                 //mysqli_query untuk menjalankan query
-                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi,transaksi.waktu, transaksi.tgl_jadi, status.nama_status FROM transaksi JOIN status ON transaksi.status = status.id_status WHERE transaksi.status != 3");
+                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi,transaksi.total, transaksi.sisa_pembayaran, transaksi.waktu, transaksi.tgl_jadi, status.nama_status FROM transaksi JOIN status ON transaksi.status = status.id_status WHERE transaksi.status != 1 AND transaksi.status !=4");
                 //no
                 $no = 1;
                 //while untuk menampilkan data
@@ -207,7 +215,7 @@
                                     </button>
                                   </div>
                                   <div class="modal-body">
-                                  <form action="./edit/lunas.php" method="POST">
+                                  <form method="POST">
                                     <div class="form-group">
                                       <label for="kode">Kode Transaksi</label>
                                       <input type="text" class="form-control" name="kode" placeholder="Kode Transaksi" value="<?php echo $d['kode_transaksi']; ?>" required>
@@ -219,6 +227,18 @@
                                     <div class="form-group">
                                       <label for="jadi">Tanggal Jadi</label>
                                       <input type="text" class="form-control" name="jadi" placeholder="Tanggal Jadi" value="<?php echo $d['tgl_jadi']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="jadi">Total</label>
+                                      <input type="text" class="form-control" name="total" placeholder="Total" value="<?php echo $d['total']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="jadi">Sisa Pembayaran</label>
+                                      <input type="text" class="form-control" name="sisabayar" placeholder="Sisa Pembayaran" value="<?php echo $d['sisa_pembayaran']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="jadi">Dibayar</label>
+                                      <input type="number" class="form-control" name="dibayar" placeholder="dibayar" required>
                                     </div>
                                     <br>
                                     <div class="modal-footer">

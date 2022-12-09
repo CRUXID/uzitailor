@@ -9,9 +9,18 @@
 <body class="hold-transition sidebar-mini layout-fixed accent-danger">
 <?php
   session_start();
+  include 'koneksi.php';
   
-  if (!isset($_SESSION['username'])) {
+  if (!isset($_SESSION['login'])) {
       header("Location: index.php");
+  }
+  
+  if(isset($_POST['lunas'])) {
+    $kodetrx = $_POST['kode'];
+
+    $query="UPDATE `transaksi` SET `status`='2' WHERE kode_transaksi='$kodetrx'";
+    mysqli_query($koneksi, $query);
+    header("Location: konfirmasi.php");
   }
 ?>
 <div class="wrapper">
@@ -180,9 +189,7 @@
                 //call koneksi.php
                 include 'koneksi.php';
                 //mysqli_query untuk menjalankan query
-                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi,data_pembeli.nama_pembeli, transaksi.waktu,transaksi.tgl_jadi,transaksi.total FROM transaksi
-                JOIN data_pembeli ON data_pembeli.id_pembeli = transaksi.id_pembeli 
-                WHERE transaksi.status=3");
+                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi,transaksi.waktu, transaksi.tgl_jadi, status.nama_status FROM transaksi JOIN status ON transaksi.status = status.id_status WHERE transaksi.status = 1");
                 //no
                 $no = 1;
                 //while untuk menampilkan data
@@ -207,7 +214,7 @@
                                     </button>
                                   </div>
                                   <div class="modal-body">
-                                  <form action="./edit/lunas.php" method="POST">
+                                  <form method="POST">
                                     <div class="form-group">
                                       <label for="kode">Kode Transaksi</label>
                                       <input type="text" class="form-control" name="kode" placeholder="Kode Transaksi" value="<?php echo $d['kode_transaksi']; ?>" required>
@@ -226,11 +233,9 @@
                                     <button type="submit" name="lunas" class="btn btn-success">konfirmasi</button>
                                   </div>
                                   </form>
-                                  </div>
                                 </div>
                               </div>
-                              </div>
-                        <!-- Modal -->
+                          </div>
                 </td>
             </tr>
             <?php 
