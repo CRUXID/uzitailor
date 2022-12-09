@@ -18,7 +18,9 @@ session_start();
     $result = mysqli_query($koneksi, $sql);
     if ($result->num_rows > 0):
         $row = mysqli_fetch_assoc($result);
+        $_SESSION['login'] = "login";
         $_SESSION['username'] = $row['username'];
+        $_SESSION['idk'] = $row['id_karyawan'];
         echo "<script type='text/javascript'>
           Swal.fire({
             title: 'Berhasil',
