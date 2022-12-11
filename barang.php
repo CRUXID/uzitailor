@@ -10,6 +10,7 @@
 <?php 
   session_start();
   require ('koneksi.php');
+  require ('config.php');
   require ('query.php');
   $crud = new crud();
 
@@ -280,9 +281,9 @@
               <?php 
                 $data = $crud->selectBarang();
                 $no = 1;
-                if($data->num_rows > 0){
-                  while($d = $data->fetch(PDO::FETCH_ASSOC)){
-              ?>
+                if($data->rowCount()>0) {
+                    while($d=$data->fetch(PDO::FETCH_ASSOC)) { 
+                ?>
                 <tr>
                     <td><?php echo $no ?></td>
                     <td><?php echo $d['kode_barang']; ?></td>
