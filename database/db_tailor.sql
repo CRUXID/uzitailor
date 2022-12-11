@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2022 at 06:58 AM
+-- Generation Time: Dec 11, 2022 at 11:52 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.23
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cart` (
   `id_cart` int(11) NOT NULL,
-  `invoice` varchar(255) NOT NULL,
+  `invoice` varchar(20) NOT NULL,
   `kode_barang` varchar(13) NOT NULL,
   `nama_barang` varchar(255) NOT NULL,
   `harga` int(11) NOT NULL,
@@ -67,7 +67,7 @@ INSERT INTO `data_pembeli` (`id_pembeli`, `nama_pembeli`, `alamat`, `no_hp`, `us
 --
 
 CREATE TABLE `detail_transaksi` (
-  `kode_transaksi` varchar(13) NOT NULL,
+  `kode_transaksi` varchar(20) NOT NULL,
   `kode_barang` varchar(13) NOT NULL,
   `qty` int(11) NOT NULL,
   `sub_total` double NOT NULL,
@@ -79,9 +79,8 @@ CREATE TABLE `detail_transaksi` (
 --
 
 INSERT INTO `detail_transaksi` (`kode_transaksi`, `kode_barang`, `qty`, `sub_total`, `catatan`) VALUES
-('AD11122291601', 'BPK', 1, 50000, NULL),
-('AD11122291601', 'CPK', 2, 50000, NULL),
-('AD11122294392', 'KPL', 5, 175000, NULL);
+('AD111222164801', 'BPK', 1, 50000, NULL),
+('AD111222164801', 'CP', 2, 60000, NULL);
 
 -- --------------------------------------------------------
 
@@ -144,7 +143,7 @@ CREATE TABLE `master_barang` (
 --
 
 INSERT INTO `master_barang` (`kode_barang`, `nama_barang`, `harga`) VALUES
-('BPK', 'Baju Panjang Katun M', 50000),
+('BPK', 'Baju Panjang Katoen M', 50000),
 ('CP', 'Celana Panjang M', 30000),
 ('CPK', 'Celana Pendek M', 25000),
 ('KPL', 'Kemeja Panjang L', 35000),
@@ -181,7 +180,7 @@ INSERT INTO `status` (`id_status`, `nama_status`) VALUES
 --
 
 CREATE TABLE `transaksi` (
-  `kode_transaksi` varchar(13) NOT NULL,
+  `kode_transaksi` varchar(20) NOT NULL,
   `waktu` datetime NOT NULL,
   `karyawan` int(11) NOT NULL,
   `id_pembeli` int(11) NOT NULL,
@@ -197,8 +196,7 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`kode_transaksi`, `waktu`, `karyawan`, `id_pembeli`, `total`, `dibayar`, `sisa_pembayaran`, `status`, `tgl_jadi`) VALUES
-('AD11122291601', '2022-12-11 09:17:11', 1, 1, 100000, 50000, 50000, '2', '2022-12-30'),
-('AD11122294392', '2022-12-11 09:44:08', 1, 1, 175000, 175000, 0, '4', '2022-12-25');
+('AD111222164801', '2022-12-11 16:49:17', 1, 10, 110000, 110000, 0, '4', '2022-12-31');
 
 --
 -- Indexes for dumped tables
@@ -266,7 +264,7 @@ ALTER TABLE `transaksi`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT for table `data_pembeli`
