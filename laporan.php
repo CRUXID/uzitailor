@@ -151,7 +151,7 @@
       <div class="container-fluid">
         <div class="card">
           <!-- /.card-header -->
-          <div class="card-body table-responsive" style="height: 500px;">
+          <div class="card-body table-responsive" style="height: 450px;">
             <table class="table table-bordered table-striped" id="tb1">
               <thead>
                 <tr>
