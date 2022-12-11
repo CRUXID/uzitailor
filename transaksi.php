@@ -271,7 +271,7 @@
           <h5 class="mb-0">No. Invoice : <?php echo $noinv ?></h5>
         </div>
         <br>
-        <table class="table table-striped table-sm table-bordered dt-responsive nowrap print-none" id="cart" width="100%">
+        <table class="table table-bordered table-striped" id="cart">
         <thead>
           <tr>
             <th>#</th>
@@ -475,7 +475,14 @@
       };
   </script>
 </div>
-<?php include 'footer.php' ?>
+  <?php include 'footer.php' ?>
+  <script>
+    $(function () {
+      $("#cart").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,
+      }).buttons().container().appendTo('#tb1_wrapper .col-md-6:eq(0)');
+    });
+  </script>
 <!-- ./wrapper -->
 </body>
 </html>
