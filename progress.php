@@ -191,22 +191,9 @@
     <div class="content">
       <div class="container-fluid">
         <div class="card">
-          <div class="card-header">
-            <div class="card-tools">
-              <div class="input-group input-group-sm" style="width: 150px;">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
           <!-- /.card-header -->
-          <div class="card-body table-responsive p-0" style="height: 400px;">
-            <table class="table table-head-fixed text-nowrap">
+          <div class="card-body table-responsive" style="height: 500px;">
+            <table class="table table-bordered table-striped" id="tb1">
               <thead>
                 <tr>
                   <th>No</th>
@@ -228,69 +215,66 @@
                 //while untuk menampilkan data
                 while($d = mysqli_fetch_array($data)){
               ?>
-                        <td><?php echo $no;?></td>
-                        <td><?php echo $d['kode_transaksi']; ?></td>
-                        <td><?php echo $d['waktu']; ?></td>
-                        <td><?php echo $d['tgl_jadi']; ?></td>
-                        <td><?php echo $d['nama_status']; ?></td>
-                        <td>
-                          <a href="" class="btn btn-success" data-toggle="modal" data-target="#modal<?php echo $d['kode_transaksi']; ?>">Pelunasan</a>
-                          <!-- Modal -->
-                          <div class="modal fade" id="modal<?php echo $d['kode_transaksi']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel"><b>Pelunasan</b></h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
-                                  <div class="modal-body">
-                                  <form method="POST">
-                                    <div class="form-group">
-                                      <label for="kode">Kode Transaksi</label>
-                                      <input type="text" class="form-control" name="kode" placeholder="Kode Transaksi" value="<?php echo $d['kode_transaksi']; ?>" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="beli">Tanggal Beli</label>
-                                      <input type="text" class="form-control" name="beli" placeholder="Waktu Pembelian" value="<?php echo $d['waktu']; ?>" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="jadi">Tanggal Jadi</label>
-                                      <input type="date" class="form-control" name="tgljadi" placeholder="Tanggal Jadi" value="<?php echo $d['tgl_jadi']; ?>" required>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="total">Total</label>
-                                      <input type="text" class="form-control" name="total" placeholder="Total" value="<?php echo $d['total']; ?>" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="jadi">Sisa Pembayaran</label>
-                                      <input type="text" class="form-control" name="sisabayar" placeholder="Sisa Pembayaran" value="<?php echo $d['sisa_pembayaran']; ?>" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="bayar">Dibayar</label>
-                                      <input type="number" class="form-control" name="bayar" placeholder="Bayar" required>
-                                      <input type="hidden" class="form-control" name="dibayar" placeholder="Dibayar" value="<?php echo $d['dibayar']; ?>">
-                                    </div>
-                                    <br>
-                                    <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                                    <button type="submit" name="lunas" class="btn btn-success">Submit</button>
-                                  </div>
-                                  </form>
-                                  </div>
-                                </div>
+                  <td><?php echo $no;?></td>
+                  <td><?php echo $d['kode_transaksi']; ?></td>
+                  <td><?php echo $d['waktu']; ?></td>
+                  <td><?php echo $d['tgl_jadi']; ?></td>
+                  <td><?php echo $d['nama_status']; ?></td>
+                  <td>
+                    <a href="" class="btn btn-success" data-toggle="modal" data-target="#modal<?php echo $d['kode_transaksi']; ?>">Pelunasan</a>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal<?php echo $d['kode_transaksi']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel"><b>Pelunasan</b></h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                            <form method="POST">
+                              <div class="form-group">
+                                <label for="kode">Kode Transaksi</label>
+                                <input type="text" class="form-control" name="kode" placeholder="Kode Transaksi" value="<?php echo $d['kode_transaksi']; ?>" readonly>
                               </div>
+                              <div class="form-group">
+                                <label for="beli">Tanggal Beli</label>
+                                <input type="text" class="form-control" name="beli" placeholder="Waktu Pembelian" value="<?php echo $d['waktu']; ?>" readonly>
                               </div>
-                        <!-- Modal -->
-                        </td>
-                    </tr>
+                              <div class="form-group">
+                                <label for="jadi">Tanggal Jadi</label>
+                                <input type="date" class="form-control" name="tgljadi" placeholder="Tanggal Jadi" value="<?php echo $d['tgl_jadi']; ?>" required>
+                              </div>
+                              <div class="form-group">
+                                <label for="total">Total</label>
+                                <input type="text" class="form-control" name="total" placeholder="Total" value="<?php echo $d['total']; ?>" readonly>
+                              </div>
+                              <div class="form-group">
+                                <label for="jadi">Sisa Pembayaran</label>
+                                <input type="text" class="form-control" name="sisabayar" placeholder="Sisa Pembayaran" value="<?php echo $d['sisa_pembayaran']; ?>" readonly>
+                              </div>
+                              <div class="form-group">
+                                <label for="bayar">Dibayar</label>
+                                <input type="number" class="form-control" name="bayar" placeholder="Bayar" required>
+                                <input type="hidden" class="form-control" name="dibayar" placeholder="Dibayar" value="<?php echo $d['dibayar']; ?>">
+                              </div>
+                              <br>
+                              <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                              <button type="submit" name="lunas" class="btn btn-success">Submit</button>
+                            </div>
+                            </form>
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                    <!-- Modal -->
+                  </td>
                 <?php
-                $no++;
-                    }
-              ?>
-                <tr>
-                </tr>
+                  $no++;
+                  }
+                ?>
               </tbody>
             </table>
           </div>
@@ -311,6 +295,13 @@
 
   <!-- Main Footer -->
   <?php include 'footer.php' ?>
+  <script>
+    $(function () {
+      $("#tb1").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+      }).buttons().container().appendTo('#tb1_wrapper .col-md-6:eq(0)');
+    });
+  </script>
 </div>
 <!-- ./wrapper -->
 </body>
