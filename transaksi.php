@@ -2,8 +2,9 @@
 <?php 
   require ('koneksi.php');
   $dataselect = mysqli_query($koneksi, "SELECT * FROM master_barang");
-  $jsArray = "var nama_barang = new Array();";
-  $jsArray2 = "var harga = new Array();";
+  $datapembeli = mysqli_query($koneksi, "SELECT * FROM data_pembeli");
+  $jsArray = "var nama_produk = new Array();";
+  $jsArray1 = "var harga_jual = new Array();";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -158,25 +159,25 @@
             <div class="col-sm-4 col-md-4 col-lg-3 mb-3">
               <label class="small text-muted mb-1">Kode Produk</label>
               <div class="position-relative">
-                <input type="text" name="Ckdproduk" class="form-control form-control-sm" list="datalist1" onchange="changeValue(this.value)" required autofocus>
+                <input type="text" name="kode" class="form-control form-control-sm" list="datalist1" onchange="changeValue(this.value)" required autofocus>
                 <datalist id="datalist1">
                     <?php if(mysqli_num_rows($dataselect)) {?>
                         <?php while($row_brg= mysqli_fetch_array($dataselect)) {?>
-                            <option value="<?php echo $row_brg["kode_barang"]?>"> <?php echo $row_brg["kode_barang"]?>
-                        <?php $jsArray .= "nama_barang['" . $row_brg['nama_barang'] . "'] = {nama_barang:'" . addslashes($row_brg['nama_barang']) . "'};";
-                        $jsArray2 .= "harga['" . $row_brg['kode_barang'] . "'] = {harga:'" . addslashes($row_brg['harga']) . "'};"; } ?>
-                    <?php } ?>
+                            <option value="<?php echo $row_brg["kode_barang"]?>"> <?php echo $row_brg["nama_barang"]?> </option>
+                            <?php $jsArray .= "nama_produk['" . $row_brg['kode_barang'] . "'] = {nama_produk:'" . addslashes($row_brg['nama_barang']) . "'};";
+                              $jsArray1 .= "harga_jual['" . $row_brg['kode_barang'] . "'] = {harga_jual:'" . addslashes($row_brg['harga']) . "'};"; } ?>
+                        <?php } ?>
                 </datalist>
               </div>
             </div>
             <div class="col-sm-4 col-md-4 col-lg-3 mb-3">
-              <label class="small text-muted mb-1">Nama Produk</label>
-              <input type="text" name="nama" id="nama" class="form-control form-control-sm bg-light" readonly> 
+              <label class="small text-muted mb-1">Nama Barang</label>
+              <input type="text" name="nama" id="nama_produk" class="form-control form-control-sm bg-light" readonly> 
             </div>
 
             <div class="col-8 col-sm-4 col-md-4 col-lg-2 mb-3">
               <label class="small text-muted mb-1">Harga</label>
-              <input type="number" name="harga" placeholder="0" id="harga" onchange="InputSub()"
+              <input type="number" name="harga" placeholder="0" id="harga_jual" onchange="InputSub()"
               class="form-control form-control-sm bg-light" readonly>
             </div>
 
@@ -198,79 +199,244 @@
           </div>
         </form>
         <?php 
+          include 'koneksi.php';
+          include 'user.php';
           if(isset($_POST['InputCart']))
           {
               $kode = htmlspecialchars($_POST['kode']);
               $nama = htmlspecialchars($_POST['nama']);
               $harga = htmlspecialchars($_POST['harga']);
               $qty = htmlspecialchars($_POST['qty']);
-              $subtotal = htmlspecialchars($_POST['sub_total']);
+              $subtotal = htmlspecialchars($_POST['subtotal']);
 
               $cekDulu = mysqli_query($koneksi,"SELECT * FROM cart ");
               $liat = mysqli_num_rows($cekDulu);
               $f = mysqli_fetch_array($cekDulu);
               $inv_c = $f['invoice'];
-              $ii = htmlspecialchars($_POST['Cqty']);
+              $ii = htmlspecialchars($_POST['qty']);
 
               if($liat>0){
-                $cekbrg = mysqli_query($koneksi,"SELECT * FROM cart WHERE kode_produk='$Input1' and invoice='$inv_c'");
+                $cekbrg = mysqli_query($koneksi,"SELECT * FROM cart WHERE kode_barang='$kode' and invoice='$inv_c'");
                 $liatlg = mysqli_num_rows($cekbrg);
                 $brpbanyak = mysqli_fetch_array($cekbrg);
                 $jmlh = $brpbanyak['qty'];
                 $jmlh1 = $brpbanyak['harga'];
                 
                 if($liatlg>0){
-                  $i = htmlspecialchars($_POST['Cqty']);
+                  $i = htmlspecialchars($_POST['qty']);
                   $baru = $jmlh + $i;
                   $baru1 = $jmlh1 * $baru;
 
-                  $updateaja = mysqli_query($koneksi,"UPDATE cart SET qty='$baru', subtotal='$baru1' WHERE invoice='$inv_c' and kode_produk='$Input1'");
+                  $updateaja = mysqli_query($koneksi,"UPDATE cart SET qty='$baru', sub_total='$baru1' WHERE invoice='$inv_c' and kode_barang='$kode'");
                   if($updateaja){
-                    echo '<script>window.location="index.php"</script>';
+                    echo '<script>window.location="transaksi.php"</script>';
                   } else {
-                    echo '<script>window.location="index.php"</script>';
+                    echo '<script>window.location="transaksi.php"</script>';
                   }
                 } else {
-                $tambahdata = mysqli_query($koneksi,"INSERT INTO cart (invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal)
-                values('$inv_c','$Input1','$Input2','$Input3','$hrg_m','$ii','$Input5')");
+                $tambahdata = mysqli_query($koneksi,"INSERT INTO cart (invoice,kode_barang,nama_barang,harga,qty,sub_total)
+                values('$inv_c','$kode','$nama','$harga','$ii','$subtotal')");
                 if ($tambahdata){
-                    echo '<script>window.location="index.php"</script>';
-                } else { echo '<script>window.location="index.php"</script>';
+                    echo '<script>window.location="transaksi.php"</script>';
+                } else { echo '<script>window.location="transaksi.php"</script>';
                 }
                 };
           } else {
             
-            $queryStar = mysqli_query($koneksi, "SELECT max(invoice) as kodeTerbesar FROM inv");
+            $queryStar = mysqli_query($koneksi, "SELECT max(kode_transaksi) as kodeTerbesar FROM transaksi");
             $data = mysqli_fetch_array($queryStar);
             $kodeInfo = $data['kodeTerbesar'];
             $urutan = (int) substr($kodeInfo, 8, 2);
             $urutan++;
             $huruf = "AD";
             $oi = $huruf . date("jnyGi") . sprintf("%02s", $urutan);
-              
-              $bikincart = mysqli_query($koneksi,"INSERT INTO inv (invoice,pembayaran,kembalian,status) values('$oi','','','proses')");
-              if($bikincart){
-                $tambahuser = mysqli_query($koneksi,"INSERT INTO cart (invoice,kode_produk,nama_produk,harga,harga_modal,qty,subtotal)
-                values('$oi','$Input1','$Input2','$Input3','$hrg_m','$ii','$Input5')");
-                if ($tambahuser){
-                  echo '<script>window.location="index.php"</script>';
-                } else { echo '<script>window.location="index.php"</script>';
-                }
-              } else {
-                
+            
+            $tambahuser = mysqli_query($koneksi,"INSERT INTO cart (invoice,kode_barang,nama_barang,harga,qty,sub_total)values('$oi','$kode','$nama','$harga','$ii','$subtotal')");
+              if ($tambahuser){
+                echo '<script>window.location="transaksi.php"</script>';
+              } else { echo '<script>window.location="transaksi.php"</script>';
               }
+
           }
           };
           $DataInv = mysqli_fetch_array(mysqli_query($koneksi,"SELECT * FROM cart LIMIT 1"));
-          $noinv = $DataInv['kode_transaksi'];
+          //jika tidak ada data di cart
+          if($DataInv == null){
+            $noinv = "AD".date("jnyGi")."01";
+          } else {
+            $noinv = $DataInv['invoice'];
+          }
           ?>
+        <div class="bg-danger p-2 text-white" style="border-radius:0.25rem;">
+          <h5 class="mb-0">No. Invoice : <?php echo $noinv ?></h5>
+        </div>
+        <br>
+        <table class="table table-striped table-sm table-bordered dt-responsive nowrap print-none" id="cart" width="100%">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Kode Barang</th>
+            <th>Nama Barang</th>
+            <th>Harga</th>
+            <th>Qty</th>
+            <th>Subtotal</th>
+            <th>Opsi</th>
+          </tr>
+        </thead>
+        <tbody>
+        <?php 
+        $no = 1;
+        $tot_bayar = 0;
+        $data_cart = mysqli_query($koneksi,"SELECT * FROM cart");
+        while($d = mysqli_fetch_array($data_cart)){
+            ?>
+          <tr>
+            <td><?php echo $no++; ?></td>
+            <td><?php echo $d['kode_barang']; ?></td>
+            <td><?php echo $d['nama_barang']; ?></td>
+            <td>Rp.<?php echo $d['harga']; ?></td>
+            <td><?php echo $d['qty']; ?></td>
+            <td>Rp.<?php echo $d['sub_total']; ?></td>
+            <td><a class="btn btn-danger btn-xs" href="?hapus=<?php echo $d['id_cart']; ?>">
+                <i class="fas fa-trash-alt fa-xs mr-1"></i>Hapus</a>
+              </td>
+          </tr>
+          <?php } ?>
+        </tbody>
+        </table>
+        <?php 
+          if(!empty($_GET['hapus'])){
+            $idcart = $_GET['hapus'];
+            $hapus_data_Cart = mysqli_query($koneksi, "DELETE FROM cart WHERE id_cart='$idcart'");
+                if($hapus_data_Cart){
+                    echo '<script>history.go(-1);</script>';
+                } else {
+                    echo '<script>alert("Gagal Hapus Data keranjang");history.go(-1);</script>';
+                }
+          };
+          if(!empty($_GET['hapusAll'])){
+            $noinvoicenya = $_GET['hapusAll'];
+            $hapus_data_Cart_all = mysqli_query($koneksi, "DELETE FROM cart WHERE invoice='$noinvoicenya'");
+            $hapus_data_Cart_all1 = mysqli_query($koneksi, "DELETE FROM transaksi WHERE kode_transaksi='$noinvoicenya'");
+                if($hapus_data_Cart_all&&$hapus_data_Cart_all1){
+                    echo '<script>history.go(-1);</script>';
+                } else {
+                    echo '<script>alert("Gagal Hapus Data keranjang");history.go(-1);</script>';
+                }
+          };
+              $itungtrans = mysqli_query($koneksi,"SELECT SUM(sub_total) as jumlahtrans FROM cart");
+              $itungtrans2 = mysqli_fetch_assoc($itungtrans);
+              $itungtrans3 = $itungtrans2['jumlahtrans'];
+          ?>
+        <div class="bg-light p-3" style="border-radius:0.25rem;">
+          <div class="row gy-3 align-items-center row-home">
+            <div class="col-md-8 col-lg-6 mb-4">
+            <form method="post">
+              <input type="hidden" id="totalCart" value="<?php echo $itungtrans3; ?>">
+              <div class="row">
+                <label for="pembayaran" class="col-4 col-sm-4 col-md-4 col-lg-3 col-form-label col-form-label-sm mb-2">Pembeli</label>
+                <div class="col-8 col-sm-8 col-md-8 col-lg-9 mb-2">
+                  <input type="text" name="pembeli" class="form-control form-control-sm" list="datalist2" onchange="changeValue(this.value)" required autofocus>
+                    <datalist id="datalist2">
+                        <?php if(mysqli_num_rows($datapembeli)) {?>
+                            <?php while($row_brg= mysqli_fetch_array($datapembeli)) {?>
+                                <option value="<?php echo $row_brg["id_pembeli"]?>"> <?php echo $row_brg["nama_pembeli"]?> </option>
+                            <?php } ?>
+                        <?php } ?>
+                    </datalist>
+                </div>
+                <label for="kembalian" class="col-4 col-sm-4 col-md-4 col-lg-3 col-form-label col-form-label-sm mb-2">Tanggal Jadi</label>
+                <div class="col-8 col-sm-8 col-md-8 col-lg-9 mb-2">
+                  <input type="date" name="tgljadi" class="form-control form-control-sm" value="<?=date("Y-m-d");?>" required>
+                </div>
+                <label for="pembayaran" class="col-4 col-sm-4 col-md-4 col-lg-3 col-form-label col-form-label-sm mb-2">DP Awal</label>
+                <div class="col-8 col-sm-8 col-md-8 col-lg-9 mb-2">
+                  <input type="text" name="pembayaran" onchange="procesBayar()" class="form-control form-control-sm" id="pembayaran" placeholder="0" required>
+                </div>
+                <label for="kembalian" class="col-4 col-sm-4 col-md-4 col-lg-3 col-form-label col-form-label-sm mb-2">Sisa Pembayaran</label>
+                <div class="col-8 col-sm-8 col-md-8 col-lg-9 mb-2">
+                  <input type="text" class="form-control form-control-sm bg-light" id="kembalian" placeholder="0" readonly>
+                  <input type="hidden" name="kembalian" id="kembalian1">
+                </div>
+                <div class="col-sm-12 text-right">
+              <div class="d-block d-sm-block d-md-none d-lg-none py-1"></div>
+              <?php 
+              $on = mysqli_query($koneksi,"SELECT * FROM cart");
+              $x1 = mysqli_num_rows($on);
+              if($x1>0){
+                ?>
+                <a href="?hapusAll=<?php echo $noinv ?>" onclick="javascript:return confirm('Anda yakin ingin menghapus semua data keranjang ?');"
+              class="btn btn-danger btn-sm px-3 mr-2"><i class="fa fa-trash-alt mr-1"></i>Hapus Semua</a>
+                <button type="submit" name="import" class="btn btn-primary btn-sm px-3">
+                <i class="fa fa-check mr-1"></i>Simpan</button>
+              <?php } else { ?>
+                  <button class="btn btn-danger btn-sm px-3 mr-2" disabled>
+                  <i class="fa fa-trash-alt mr-1"></i>Hapus Semua</button>
+                  <button class="btn btn-primary btn-sm px-3" disabled>
+                  <i class="fa fa-check mr-1"></i>Simpan</button>
+              <?php  } ?>
+            </div>
+              </div>
+              </form>
+            </div>
+
+            <div class="col-md-4 col-lg-6 mb-2 text-danger text-right">
+              <p class="small text-muted mb-0">Total Item</p>
+              <h3 class="mb-0" style="font-weight:600;">Rp. <?php echo $itungtrans3 ?></h3>
+            </div>
+
+          </div>
+        </div>
       </div>
       <!-- /.container-fluid -->
     </div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  <?php 
+    if(isset($_POST['import']))
+    {
+        $Ipembayaran = htmlspecialchars($_POST['pembayaran']);
+        $Ikembalian = htmlspecialchars($_POST['kembalian']);
+        $waktu = date("Y-m-d H:i:s");
+        $idpem = htmlspecialchars($_POST['pembeli']);
+        $tgljadi = htmlspecialchars($_POST['tgljadi']);
 
+        $UpdCart = mysqli_query($koneksi,"INSERT INTO transaksi (kode_transaksi,waktu,karyawan,id_pembeli,total,dibayar,sisa_pembayaran,status,tgl_jadi) values('$noinv','$waktu','$uid','$idpem','$itungtrans3','$Ipembayaran','$Ikembalian','2','$tgljadi')"); 
+
+        $UpdLap = mysqli_query($koneksi, "INSERT INTO detail_transaksi (kode_transaksi,kode_barang,qty,sub_total) SELECT invoice,kode_barang,qty,sub_total FROM cart") or die (mysqli_connect_error());
+        
+        $DelCart = mysqli_query($koneksi,"DELETE FROM cart") or die (mysqli_connect_error());
+        
+        if($UpdCart&&$UpdLap&&$DelCart){
+          echo "<script type='text/javascript'>
+            Swal.fire({
+              title: 'Berhasil',
+              text: 'Transaksi berhasil ditambahkan',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then((result) => {
+              if (result.value) {
+                window.location.href='transaksi.php';
+              }
+            })
+          </script>";
+        } else {
+        echo "<script type='text/javascript'>
+          Swal.fire({
+            title: 'Gagal',
+            text: 'Transaksi gagal ditambahkan',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          }).then((result) => {
+            if (result.value) {
+              window.location.href='transaksi.php';
+            }
+          })
+        </script>";
+        }
+    };
+  ?>              
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
@@ -278,8 +444,38 @@
   <!-- /.control-sidebar -->
 
   <!-- Main Footer -->
-  <?php include 'footer.php' ?>
+  
+  <script type="text/javascript">
+      <?php echo $jsArray,$jsArray1 ?>
+        function changeValue(kode_barang) {
+          document.getElementById("nama_produk").value = nama_produk[kode_barang].nama_produk;
+          document.getElementById("harga_jual").value = harga_jual[kode_barang].harga_jual;
+        };
+        function InputSub() {
+        var harga_jual =  parseInt(document.getElementById('harga_jual').value);
+        var jumlah_beli =  parseInt(document.getElementById('qty').value);
+        var jumlah_harga = harga_jual * jumlah_beli;
+          document.getElementById('subtotal').value = jumlah_harga;
+      };
+      function procesBayar() {
+      var harga_Cart =  parseInt(document.getElementById('totalCart').value);
+      var pembayaran_Cart =  parseInt(document.getElementById('pembayaran').value);
+      var kembali_cart;
+
+      if(pembayaran_Cart < harga_Cart){
+        kembali_Cart = (pembayaran_Cart - harga_Cart) * -1;
+        document.getElementById('kembalian1').value = kembali_Cart;
+        document.getElementById('kembalian').value = kembali_Cart;
+      } else if (pembayaran_Cart >= harga_Cart){
+        kembali_Cart = pembayaran_Cart - harga_Cart;
+        document.getElementById('kembalian1').value = kembali_Cart;
+        document.getElementById('kembalian').value = kembali_Cart;
+      }
+
+      };
+  </script>
 </div>
+<?php include 'footer.php' ?>
 <!-- ./wrapper -->
 </body>
 </html>

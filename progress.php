@@ -20,14 +20,22 @@
     $kodetrx = $_POST['kode'];
     $sisabayar = $_POST['sisabayar'];
     $dibayar = $_POST['dibayar'];
+    $tgljadi = $_POST['tgljadi'];
 
     if(isset($_POST['bayar'])) {
       $bayar = $_POST['bayar'];
       if($bayar < $sisabayar) {
-        echo "<script>alert('Pembayaran kurang dari sisa pembayaran!');</script>";
+        echo "<script type='text/javascript'>
+          Swal.fire({
+            title: 'Gagal',
+            text: 'Pembayaran Kurang!',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          })
+        </script>";
       } else if ($bayar >= $sisabayar) {
         $bayar = $bayar + $dibayar;
-        $query="UPDATE `transaksi` SET  `dibayar`='$bayar', `sisa_pembayaran`='0', `status`='4' WHERE kode_transaksi='$kodetrx'";
+        $query="UPDATE `transaksi` SET  `dibayar`='$bayar', `sisa_pembayaran`='0', `status`='4', tgl_jadi='$tgljadi' WHERE kode_transaksi='$kodetrx'";
         mysqli_query($koneksi, $query);
         echo "<script type='text/javascript'>
           Swal.fire({
@@ -249,7 +257,7 @@
                                     </div>
                                     <div class="form-group">
                                       <label for="jadi">Tanggal Jadi</label>
-                                      <input type="text" class="form-control" name="jadi" placeholder="Tanggal Jadi" value="<?php echo $d['tgl_jadi']; ?>" required>
+                                      <input type="date" class="form-control" name="tgljadi" placeholder="Tanggal Jadi" value="<?php echo $d['tgl_jadi']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                       <label for="total">Total</label>

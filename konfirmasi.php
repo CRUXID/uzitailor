@@ -17,8 +17,9 @@
   
   if(isset($_POST['lunas'])) {
     $kodetrx = $_POST['kode'];
-
-    $query="UPDATE `transaksi` SET `status`='2' WHERE kode_transaksi='$kodetrx'";
+    $tgljadi = $_POST['jadi'];
+    
+    $query="UPDATE `transaksi` SET `status`='2', `tgl_jadi`='$tgljadi' WHERE kode_transaksi='$kodetrx'";
     mysqli_query($koneksi, $query);
     echo "<script type='text/javascript'>
       Swal.fire({
@@ -228,15 +229,15 @@
                                   <form method="POST">
                                     <div class="form-group">
                                       <label for="kode">Kode Transaksi</label>
-                                      <input type="text" class="form-control" name="kode" placeholder="Kode Transaksi" value="<?php echo $d['kode_transaksi']; ?>" required>
+                                      <input type="text" class="form-control" name="kode" placeholder="Kode Transaksi" value="<?php echo $d['kode_transaksi']; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                       <label for="beli">Tanggal Beli</label>
-                                      <input type="text" class="form-control" name="beli" placeholder="Waktu Pembelian" value="<?php echo $d['waktu']; ?>" required>
+                                      <input type="text" class="form-control" name="beli" placeholder="Waktu Pembelian" value="<?php echo $d['waktu']; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                       <label for="jadi">Tanggal Jadi</label>
-                                      <input type="text" class="form-control" name="jadi" placeholder="Tanggal Jadi" value="<?php echo $d['tgl_jadi']; ?>" required>
+                                      <input type="date" class="form-control" name="jadi" placeholder="Tanggal Jadi" value="<?php echo $d['tgl_jadi']; ?>" required>
                                     </div>
                                     <br>
                                     <div class="modal-footer">
