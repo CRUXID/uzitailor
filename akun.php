@@ -44,7 +44,6 @@
     $password = $_POST['password'];
     $namakaryawan = $_POST['nama_karyawan'];
     $alamat = $_POST['alamat'];
-    $kelamin = $_POST['kelamin'];
     $no_hp = $_POST['no_hp'];
     $filename = $_FILES["uploadfile"]["name"];
     $tempname = $_FILES["uploadfile"]["tmp_name"];
@@ -58,7 +57,7 @@
       }
     }
     //query untuk insert data
-    $sql = "INSERT INTO `karyawan` (`id_karyawan`, `username`, `nama_karyawan`, `alamat_karyawan`, `jenis_kelamin`, `no_hp`, `foto_profil`, `password`, `level`) VALUES ('', '$username', '$namakaryawan', '$alamat', '$kelamin', '$no_hp', '$filename', '$password', '$level')";
+    $sql = "INSERT INTO `karyawan` (`id_karyawan`, `username`, `nama_karyawan`, `alamat_karyawan`, `no_hp`, `foto_profil`, `password`, `level`) VALUES ('', '$username', '$namakaryawan', '$alamat', '$no_hp', '$filename', '$password', '$level')";
     //eksekusi query
     if(mysqli_query($koneksi, $sql)):
       move_uploaded_file($tempname, $folder);
@@ -240,13 +239,6 @@
                   <div class="form-group">
                     <label for="nama">Alamat</label>
                     <input type="text" class="form-control" name="alamat" placeholder="Alamat" required>
-                  </div>
-                  <div class="form-group">
-                        <label>Jenis Kelamin</label>
-                        <select class="form-control" name="kelamin">
-                          <option>Laki - Laki</option>
-                          <option>Perempuan</option>
-                        </select>
                   </div>
                   <div class="form-group">
                     <label for="nohp">No HP</label>

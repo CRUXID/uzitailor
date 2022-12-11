@@ -181,7 +181,6 @@
                 <td><?php echo $d['waktu']; ?></td>
                 <td><?php echo $d['tgl_jadi']; ?></td>
                 <td><?php echo $d['total']; ?></td>
-                <td>
                 </td>
             </tr>
             <?php 
