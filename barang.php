@@ -328,7 +328,7 @@
                             </div>
                             </div>
                         <!-- Modal -->
-                      </td>
+                    </td>
                 </tr>
                 <?php 
                     $no++;

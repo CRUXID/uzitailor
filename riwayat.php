@@ -168,20 +168,24 @@
                 //call koneksi.php
                 include 'koneksi.php';
                 //mysqli_query untuk menjalankan query
-                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi, karyawan.nama_karyawan, data_pembeli.nama_pembeli, transaksi.waktu, transaksi.total FROM transaksi JOIN karyawan ON karyawan.id_karyawan = transaksi.kode_transaksi JOIN data_pembeli ON data_pembeli.id_pembeli=transaksi.id_pembeli");
+                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi, karyawan.nama_karyawan, data_pembeli.nama_pembeli,transaksi.waktu,transaksi.total FROM 
+                transaksi JOIN karyawan ON transaksi.karyawan = karyawan.id_karyawan
+                JOIN data_pembeli ON transaksi.id_pembeli = data_pembeli.id_pembeli
+                WHERE transaksi.status = 4");
                 //no
                 $no = 1;
                 //while untuk menampilkan data
                 while($d = mysqli_fetch_array($data)){
-            ?>
+              ?>
             <tr>
                 <td><?php echo $no ?></td>
                 <td><?php echo $d['kode_transaksi']; ?></td>
-                <td><?php echo $d['kode_barang']; ?></td>
+                <td><?php echo $d['nama_karyawan']; ?></td>
                 <td><?php echo $d['nama_pembeli']; ?></td>
                 <td><?php echo $d['waktu']; ?></td>
                 <td><?php echo $d['total']; ?></td>
                 <td>
+                  <a href="detail.php?detail=<?php echo $d['kode_transaksi']; ?>" class="btn btn-primary delete"><i class="fa-solid fa-eye"></i></a>
                 </td>
             </tr>
             <?php 
@@ -199,7 +203,6 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->

@@ -409,18 +409,7 @@
         $DelCart = mysqli_query($koneksi,"DELETE FROM cart") or die (mysqli_connect_error());
         
         if($UpdCart&&$UpdLap&&$DelCart){
-          echo "<script type='text/javascript'>
-            Swal.fire({
-              title: 'Berhasil',
-              text: 'Transaksi berhasil ditambahkan',
-              icon: 'success',
-              confirmButtonText: 'OK'
-            }).then((result) => {
-              if (result.value) {
-                window.location.href='transaksi.php';
-              }
-            })
-          </script>";
+          echo '<script>window.location="invoice.php?detail='.$noinv.'"</script>';
         } else {
         echo "<script type='text/javascript'>
           Swal.fire({
@@ -467,7 +456,7 @@
         document.getElementById('kembalian1').value = kembali_Cart;
         document.getElementById('kembalian').value = kembali_Cart;
       } else if (pembayaran_Cart >= harga_Cart){
-        kembali_Cart = pembayaran_Cart - harga_Cart;
+        kembali_Cart = 0;
         document.getElementById('kembalian1').value = kembali_Cart;
         document.getElementById('kembalian').value = kembali_Cart;
       }
@@ -479,7 +468,7 @@
   <script>
     $(function () {
       $("#cart").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false,
+        "responsive": true, "lengthChange": false, "autoWidth": false, "searching": false, "bPaginate": false, "bInfo" : false,
       }).buttons().container().appendTo('#tb1_wrapper .col-md-6:eq(0)');
     });
   </script>

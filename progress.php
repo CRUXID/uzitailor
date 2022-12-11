@@ -27,28 +27,22 @@
       if($bayar < $sisabayar) {
         echo "<script type='text/javascript'>
           Swal.fire({
-            title: 'Gagal',
-            text: 'Pembayaran Kurang!',
-            icon: 'error',
+            title: 'Peringatan!',
+            text: 'Status transaksi menjadi pending !',
+            icon: 'warning',
+            showCancelButton: true,
             confirmButtonText: 'OK'
-          })
+          }).then(result => {
+            if(result.isConfirmed){
+                window.location.href = 'pending.php?detail=$kodetrx&jadi=$tgljadi';
+            }
+        })
         </script>";
       } else if ($bayar >= $sisabayar) {
         $bayar = $bayar + $dibayar;
         $query="UPDATE `transaksi` SET  `dibayar`='$bayar', `sisa_pembayaran`='0', `status`='4', tgl_jadi='$tgljadi' WHERE kode_transaksi='$kodetrx'";
         mysqli_query($koneksi, $query);
-        echo "<script type='text/javascript'>
-          Swal.fire({
-            title: 'Berhasil',
-            text: 'Transaksi Berhasil Dilunasi!',
-            icon: 'success',
-            confirmButtonText: 'OK'
-          }).then((result) => {
-            if (result.value) {
-              header('Location: progress.php');
-            }
-          })
-        </script>";
+        echo '<script>window.location="struk.php?detail='.$kodetrx.'"</script>';
       }
     } else {
       $bayar = 0;
