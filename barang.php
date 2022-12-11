@@ -10,6 +10,8 @@
 <?php 
   session_start();
   require ('koneksi.php');
+  require ('query.php');
+  $crud = new crud();
 
   if (!isset($_SESSION['login'])) {
       header("Location: index.php");
@@ -276,15 +278,11 @@
               </thead>
               <tbody>
               <?php 
-                    //call koneksi.php
-                    include 'koneksi.php';
-                    //mysqli_query untuk menjalankan query
-                    $data = mysqli_query($koneksi,"SELECT kode_barang, nama_barang, harga FROM master_barang");
-                    //no
-                    $no = 1;
-                    //while untuk menampilkan data
-                    while($d = mysqli_fetch_array($data)){
-                ?>
+                $data = $crud->selectBarang();
+                $no = 1;
+                if($data->num_rows > 0){
+                  while($d = $data->fetch(PDO::FETCH_ASSOC)){
+              ?>
                 <tr>
                     <td><?php echo $no ?></td>
                     <td><?php echo $d['kode_barang']; ?></td>
@@ -332,7 +330,7 @@
                 </tr>
                 <?php 
                     $no++;
-                    }
+                    }}
                 ?>
               </tbody>
             </table>
