@@ -7,7 +7,7 @@
   <title>Uzi Tailor | Master Barang</title>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed accent-danger">
-<?php 
+<?php
   session_start();
   require ('koneksi.php');
   require ('config.php');
