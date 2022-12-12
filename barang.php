@@ -22,50 +22,12 @@
     $kodebarang = $_POST['kode'];
     $namabarang = $_POST['nama'];
     $hargabarang = $_POST['harga'];
-    //query untuk insert data
-    $sql = "INSERT INTO master_barang (kode_barang, nama_barang, harga) VALUES ('$kodebarang', '$namabarang', '$hargabarang')";
-    //eksekusi query
-    if(mysqli_query($koneksi, $sql)):
-      echo "<script type='text/javascript'>
-      Swal.fire({
-        title: 'Berhasil',
-        text: 'Data berhasil ditambahkan',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      }).then((result) => {
-        if (result.value) {
-          header('Location: barang.php');
-        }
-      })
-    </script>";
-    else:
-      echo "<script type='text/javascript'>
-      Swal.fire({
-        title: 'Gagal',
-        text: 'Data gagal ditambahkan',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      }).then((result) => {
-        if (result.value) {
-          header('Location: barang.php');
-        }
-      })
-    </script>";
-    endif;
-    mysqli_close($koneksi);
-  endif;
 
-  if(isset($_POST['edit'])):
-    $kodebarang = $_POST['kode'];
-    $namabarang = $_POST['nama'];
-    $harga      = $_POST['harga'];
-    // query SQL untuk update data
-    $query="UPDATE master_barang SET kode_barang='$kodebarang',nama_barang='$namabarang',harga='$harga' WHERE kode_barang='$kodebarang'";
-    if(mysqli_query($koneksi, $query)):
+    if($crud->tambahBarang($kodebarang, $namabarang, $hargabarang)):
       echo "<script type='text/javascript'>
         Swal.fire({
           title: 'Berhasil',
-          text: 'Data Berhasil Diubah',
+          text: 'Data berhasil ditambahkan',
           icon: 'success',
           confirmButtonText: 'OK'
         }).then((result) => {
@@ -78,7 +40,7 @@
       echo "<script type='text/javascript'>
         Swal.fire({
           title: 'Gagal',
-          text: 'Data Gagal Diubah',
+          text: 'Data gagal ditambahkan',
           icon: 'error',
           confirmButtonText: 'OK'
         }).then((result) => {
@@ -88,7 +50,40 @@
         })
       </script>";
     endif;
-    mysqli_close($koneksi);
+  endif;
+
+  if(isset($_POST['edit'])):
+    $kodebarang = $_POST['kode'];
+    $namabarang = $_POST['nama'];
+    $harga      = $_POST['harga'];
+    
+    if($crud->ubahBarang($kodebarang, $namabarang, $harga)):
+      echo "<script type='text/javascript'>
+        Swal.fire({
+          title: 'Berhasil',
+          text: 'Data berhasil diubah',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.value) {
+            header('Location: barang.php');
+          }
+        })
+      </script>";
+    else:
+      echo "<script type='text/javascript'>
+        Swal.fire({
+          title: 'Gagal',
+          text: 'Data gagal diubah',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.value) {
+            header('Location: barang.php');
+          }
+        })
+      </script>";
+    endif;
   endif;
 ?>
 <div class="wrapper">

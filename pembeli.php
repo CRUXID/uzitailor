@@ -10,6 +10,9 @@
 <?php 
   session_start();
   require ('koneksi.php');
+  require ('config.php');
+  require ('query.php');
+  $crud = new crud();
 
   if (!isset($_SESSION['login'])) {
       header("Location: index.php");
@@ -19,48 +22,43 @@
     $nama = $_POST['nama'];
     $alamat = $_POST['alamat'];
     $nohp = $_POST['nohp'];
-    //query untuk insert data
-    $sql = "INSERT INTO `data_pembeli`(`id_pembeli`, `nama_pembeli`, `alamat`, `no_hp`) VALUES ('','$nama','$alamat','$nohp')";
-    //eksekusi query
-    if(mysqli_query($koneksi, $sql)):
+    
+    if($crud->tambahPembeli($nama, $alamat, $nohp)):
       echo "<script type='text/javascript'>
-      Swal.fire({
-        title: 'Berhasil',
-        text: 'Data berhasil ditambahkan',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      }).then((result) => {
-        if (result.value) {
-          header('Location: pembeli.php');
-        }
-      })
-    </script>";
+        Swal.fire({
+          title: 'Berhasil',
+          text: 'Data Berhasil Ditambahkan',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.value) {
+            header('Location: pembeli.php');
+          }
+        })
+      </script>";
     else:
       echo "<script type='text/javascript'>
-      Swal.fire({
-        title: 'Gagal',
-        text: 'Data gagal ditambahkan',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      }).then((result) => {
-        if (result.value) {
-          header('Location: pembeli.php');
-        }
-      })
-    </script>";
+        Swal.fire({
+          title: 'Gagal',
+          text: 'Data Gagal Ditambahkan',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.value) {
+            header('Location: pembeli.php');
+          }
+        })
+      </script>";
     endif;
-    mysqli_close($koneksi);
   endif;
 
   if(isset($_POST['edit'])):
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $id        = $_POST['id_pembeli'];
     $nama      = $_POST['nama'];
-    $alamat      = $_POST['alamat'];
+    $alamat    = $_POST['alamat'];
     $nohp      = $_POST['nohp'];
-    // query SQL untuk insert data
-    $query="UPDATE data_pembeli SET nama_pembeli='$nama',alamat='$alamat',no_hp='$nohp', username='$username', password='$password'";
-    if(mysqli_query($koneksi, $query)):
+    
+    if($crud->ubahPembeli($id, $nama, $alamat, $nohp)):
       echo "<script type='text/javascript'>
         Swal.fire({
           title: 'Berhasil',
@@ -87,7 +85,6 @@
         })
       </script>";
     endif;
-    mysqli_close($koneksi);
   endif;
 ?>
 <div class="wrapper">
@@ -224,7 +221,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                <form action="" method="POST">
                   <div class="form-group">
                     <label for="nama">Nama Pembeli</label>
                     <input type="text" class="form-control" name="nama" placeholder="Nama Pembeli" required>
@@ -304,13 +301,8 @@
                                 </div>
                                 <div class="modal-body">
                                 <form method="POST">
-                                <div class="form-group">
-                                      <label for="username">Username</label>
-                                      <input type="text" class="form-control" name="username" placeholder="Username"  value="<?php echo $d['username']; ?>"required>
-                                    </div>
                                     <div class="form-group">
-                                      <label for="password">Password</label>
-                                      <input type="password" class="form-control" name="password" placeholder="Password"  value="<?php echo $d['password']; ?>" required>
+                                      <input type="hidden" class="form-control" name="id_pembeli" value="<?php echo $d['id_pembeli']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                       <label for="nama">Nama Pembeli</label>
