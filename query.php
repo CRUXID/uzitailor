@@ -82,5 +82,22 @@ class crud extends connect {
         $result->execute();
         return $result;
     }
+    
+    public function selectLaporan()
+    {
+        $sql ="SELECT transaksi.kode_transaksi,data_pembeli.nama_pembeli, transaksi.waktu,transaksi.tgl_jadi,transaksi.total FROM transaksi JOIN data_pembeli ON data_pembeli.id_pembeli = transaksi.id_pembeli WHERE transaksi.status=4";
+        $result = $this->konek->prepare($sql);
+        $result->execute();
+        return $result;
+    }
+
+    public function selectRiwayat()
+    {
+        $sql ="SELECT transaksi.kode_transaksi, karyawan.nama_karyawan, data_pembeli.nama_pembeli,transaksi.waktu,transaksi.total FROM transaksi JOIN karyawan ON transaksi.karyawan = karyawan.id_karyawan JOIN data_pembeli ON transaksi.id_pembeli = data_pembeli.id_pembeli WHERE transaksi.status = 4";
+        $result = $this->konek->prepare($sql);
+        $result->execute();
+        return $result;
+    }
+    
 }
 ?>

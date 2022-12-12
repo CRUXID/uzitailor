@@ -9,6 +9,10 @@
 <body class="hold-transition sidebar-mini layout-fixed accent-danger">
 <?php
   session_start();
+  require ('koneksi.php');
+  require ('config.php');
+  require ('query.php');
+  $crud = new crud();
   
   if (!isset($_SESSION['login'])) {
       header("Location: index.php");
@@ -164,18 +168,11 @@
                 </tr>
               </thead>
               <tbody>
-              <?php
-                //call koneksi.php
-                include 'koneksi.php';
-                //mysqli_query untuk menjalankan query
-                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi, karyawan.nama_karyawan, data_pembeli.nama_pembeli,transaksi.waktu,transaksi.total FROM 
-                transaksi JOIN karyawan ON transaksi.karyawan = karyawan.id_karyawan
-                JOIN data_pembeli ON transaksi.id_pembeli = data_pembeli.id_pembeli
-                WHERE transaksi.status = 4");
-                //no
+              <?php 
+                $data = $crud->selectRiwayat();
                 $no = 1;
-                //while untuk menampilkan data
-                while($d = mysqli_fetch_array($data)){
+                if($data->rowCount()>0) {
+                    while($d=$data->fetch(PDO::FETCH_ASSOC)) { 
               ?>
             <tr>
                 <td><?php echo $no ?></td>
@@ -190,7 +187,7 @@
             </tr>
             <?php 
                 $no++;
-                }
+                }}
             ?> 
               </tbody>
             </table>
