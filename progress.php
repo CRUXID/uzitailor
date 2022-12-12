@@ -250,7 +250,7 @@
                               </div>
                               <div class="form-group">
                                 <label for="bayar">Dibayar</label>
-                                <input type="number" class="form-control" name="bayar" placeholder="Bayar" required>
+                                <input type="number" class="form-control" name="bayar" placeholder="Bayar" value="0" required>
                                 <input type="hidden" class="form-control" name="dibayar" placeholder="Dibayar" value="<?php echo $d['dibayar']; ?>">
                               </div>
                               <br>
