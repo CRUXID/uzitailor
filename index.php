@@ -6,31 +6,27 @@
   <title>Uzi Tailor | Log in</title>
 </head>
 <body class="hold-transition login-page">
-<?php 
-require ('header.php');
-session_start();
-  require ('koneksi.php');
-  if($_SERVER['REQUEST_METHOD']=='POST'):
+<?php
+  session_start();
+  require ('header.php');
+  require ('config.php');
+  require ('query.php');
+  $crud = new crud();
+
+  if (isset($_POST['submit'])){
     $username = $_POST['username'];
     $password = $_POST['password'];
-    
-    $sql = "SELECT * FROM karyawan WHERE username='$username' AND password='$password'";
-    $result = mysqli_query($koneksi, $sql);
-    if ($result->num_rows > 0):
-        $row = mysqli_fetch_assoc($result);
-        $_SESSION['login'] = "login";
-        $_SESSION['username'] = $row['username'];
-        $_SESSION['idk'] = $row['id_karyawan'];
-        echo "<script type='text/javascript'>
-          Swal.fire({
-            title: 'Berhasil',
-            text: 'Berhasil Login',
-            icon: 'success',
-          })
-          setTimeout(function() {
-            window.location.href = 'transaksi.php';
-          }, 1000);
-        </script>";
+    if($crud->login($username, $password)):
+      echo "<script type='text/javascript'>
+        Swal.fire({
+          title: 'Berhasil',
+          text: 'Berhasil Login',
+          icon: 'success',
+        })
+        setTimeout(function() {
+          window.location.href = 'transaksi.php';
+        }, 1000);
+      </script>";
     else:
       echo "<script type='text/javascript'>
         Swal.fire({
@@ -40,7 +36,7 @@ session_start();
         })
       </script>";
     endif;
-endif;
+  }
 ?>
 <div class="login-box">
   <div class="login-logo">
@@ -50,8 +46,7 @@ endif;
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Login untuk masuk ke sistem</p>
-
-      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+      <form action="" method="POST">
         <div class="input-group mb-3">
           <input type="text" class="form-control" name="username" placeholder="Username">
           <div class="input-group-append">
@@ -72,7 +67,7 @@ endif;
           <div class="col-4">
           </div>
           <div class="col-4">
-          <button type="submit" class="btn btn-primary btn-block">Login</button>
+          <button type="submit" name="submit" class="btn btn-primary btn-block">Login</button>
           </div>
           <!-- /.col -->
           <div class="col-4">
