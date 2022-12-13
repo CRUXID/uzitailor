@@ -1,0 +1,25 @@
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #print, #print * {
+        visibility: visible;
+        font-size:2.2rem;
+    }
+    #print {
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin-top: 0px !important;
+    }
+    #print .print-none{
+      display: none !important;
+    }
+    #print .print-show{
+      display: block !important;
+    }
+    @page {
+        size: A6 portrait !important;
+        margin: 0;
+    }
+}

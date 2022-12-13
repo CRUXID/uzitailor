@@ -226,62 +226,66 @@
                 </div>
             </div>
         </div>
-
+        
         <!-- data print -->
         <section id="print">
-        <div class="d-none pt-5 px-5 print-show">
-                <div class="text-center mb-5 pt-2">
-                    <h2 class="mb-3" style="font-size:60px;"><?php echo $toko ?></h2>
-                    <h2 class="mb-0"><?php echo $alamat ?></h2>
-                    <h2 class="mb-4">Telp : <?php echo $telepon ?></h2>
-                </div>
-                    <h2 class="mb-1">Invoice : <?php echo $noinv ?>
-                  <span class="float-right">Kasir : <?php echo $username ?></span></h2>
-                    <h2 class="mb-1">Tanggal : <?php echo $Datee ?></h2>
-            <div class="row">
-                <div class="col-12 py-3 my-3 border-top border-bottom">
-                    <div class="row">
-                        <div class="col-5"><h2 class="mb-0 py-1" style="font-weight:700;">Description</h2></div>
-                        <div class="col-2"><h2 class="mb-0 py-1" style="font-weight:700;">Harga</h2></div>
-                        <div class="col-2"><h2 class="mb-0 py-1" style="font-weight:700;">Qty</h2></div>
-                        <div class="col-3"><h2 class="mb-0 py-1" style="font-weight:700;">Jumlah</h2></div>
-                    </div>
-                </div>
-                <?php 
-                $no = 1;
-                $dataprint = mysqli_query($koneksi,"SELECT * FROM laporan WHERE invoice='$noinv'");
-                while($c = mysqli_fetch_array($dataprint)){
-                    ?>
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-5"><h2 class="mb-0 py-1" style="font-weight:500;"><?php echo $c['nama_produk']; ?></h2></div>
-                        <div class="col-2"><h2 class="mb-0 py-1" style="font-weight:500;"><?php echo $c['harga']; ?></h2></div>
-                        <div class="col-2"><h2 class="mb-0 py-1" style="font-weight:500;"><?php echo $c['qty']; ?></h2></div>
-                        <div class="col-3"><h2 class="mb-0 py-1" style="font-weight:500;"><?php echo $c['subtotal']; ?></h2></div>
-                    </div>
-                </div>
-              <?php } ?>
-              <div class="col-12 py-3 my-3 border-top">
-                    <div class="row justify-content-end">
-
-                        <div class="col-3 text-right border-bottom">
-                          <h2 class="mb-1" style="font-weight:700;">Total <span class="ml-3">:</span></h2>
-                          <h2 class="mb-1" style="font-weight:500;">Tunai <span class="ml-3">:</span></h2>
-                          <h2 class="mb-1" style="font-weight:500;">Kembali <span class="ml-3">:</span></h2>
-                        </div>
-                        <div class="col-3 border-bottom">
-                          <h2 class="mb-1" style="font-weight:700;"><?php echo $i4['isub']; ?></h2>
-                          <h2 class="mb-1" style="font-weight:500;"><?php echo $Dbayar; ?></h2>
-                          <h2 class="mb-1" style="font-weight:500;"><?php echo $Dkembali; ?></h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 text-center mt-5">
-                    <h2>* Terima Kasih Telah Berbelanja Di Uzi Tailor *</h2>
-                </div>
-            </div><!-- end row -->
-        </div><!-- end box print -->
-        </section>
+              <div class="d-none pt-5 px-5 print-show">
+                  <div class="text-center mb-5 pt-2">
+                      <h2 class="mb-3" style="font-size:60px;">Uzi Tailor</h2>
+                      <h2 class="mb-0">Jl. Mastrip Lama</h2>
+                      <h2 class="mb-4">Telp : 0895-1024-5695</h2>
+                  </div>
+                      <h2 class="mb-1">Invoice : <?php echo $noinv ?>
+                      <span class="float-right">Kasir : <?php echo $namak ?></span></h2>
+                      <h2 class="mb-1">Tanggal : <?php echo $Datee ?></h2>
+                  <div class="row">
+                      <div class="col-12 py-3 my-3 border-top border-bottom">
+                          <div class="row">
+                              <div class="col-5"><h2 class="mb-0 py-1" style="font-weight:700;">Description</h2></div>
+                              <div class="col-2"><h2 class="mb-0 py-1" style="font-weight:700;">Harga</h2></div>
+                              <div class="col-2"><h2 class="mb-0 py-1" style="font-weight:700;">Qty</h2></div>
+                              <div class="col-3"><h2 class="mb-0 py-1" style="font-weight:700;">Jumlah</h2></div>
+                          </div>
+                      </div>
+                      <?php 
+                      $no = 1;
+                      $dataprint = mysqli_query($koneksi,"SELECT detail_transaksi.kode_barang, master_barang.nama_barang,master_barang.harga,detail_transaksi.qty,detail_transaksi.sub_total FROM detail_transaksi JOIN master_barang ON master_barang.kode_barang = detail_transaksi.kode_barang WHERE kode_transaksi = '$noinv'");
+                      while($c = mysqli_fetch_array($dataprint)){ ?>
+                      <div class="col-12">
+                          <div class="row">
+                              <div class="col-5"><h2 class="mb-0 py-1" style="font-weight:500;"><?php echo $c['nama_barang']; ?></h2></div>
+                              <div class="col-2"><h2 class="mb-0 py-1" style="font-weight:500;"><?php echo $c['harga']; ?></h2></div>
+                              <div class="col-2"><h2 class="mb-0 py-1" style="font-weight:500;"><?php echo $c['qty']; ?></h2></div>
+                              <div class="col-3"><h2 class="mb-0 py-1" style="font-weight:500;"><?php echo $c['sub_total']; ?></h2></div>
+                          </div>
+                      </div>
+                      <?php } ?>
+                      <div class="col-12 py-3 my-3 border-top">
+                          <div class="row justify-content-end">
+                              <div class="col-3 text-right border-bottom">
+                                  <h2 class="mb-1" style="font-weight:700;">Total <span class="ml-3">:</span></h2>
+                                  <h2 class="mb-1" style="font-weight:500;">Tunai <span class="ml-3">:</span></h2>
+                                  <h2 class="mb-1" style="font-weight:500;">Kembali <span class="ml-3">:</span></h2>
+                              </div>
+                              <div class="col-3 border-bottom">
+                                  <h2 class="mb-1" style="font-weight:700;"><?php echo $i4['total']; ?></h2>
+                                  <h2 class="mb-1" style="font-weight:500;"><?php echo $Dbayar; ?></h2>
+                                  <?php 
+                                    if($Dkembali < 0) { 
+                                  ?>
+                                      <h2 class="mb-1" style="font-weight:500;">- <?php echo $kembalian; ?></h2>
+                                  <?php } else { ?>
+                                    <h2 class="mb-1" style="font-weight:500;"><?php echo $kembalian; ?></h2>
+                                  <?php } ?>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-12 text-center mt-5">
+                          <h2>* Terima Kasih Telah Berbelanja Di Uzi Tailor *</h2>
+                      </div>
+                  </div><!-- end row -->
+              </div><!-- end box print -->
+          </section> 
       </div>
       <!-- /.container-fluid -->
     </section>
