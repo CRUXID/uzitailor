@@ -18,8 +18,11 @@
   if(isset($_POST['lunas'])) {
     $kodetrx = $_POST['kode'];
     $tgljadi = $_POST['jadi'];
+    $total = $_POST['total'];
+    $dibayar = $_POST['dibayar'];
+    $sisa = $_POST['sisa'];
     
-    $query="UPDATE `transaksi` SET `status`='2', `tgl_jadi`='$tgljadi' WHERE kode_transaksi='$kodetrx'";
+    $query="UPDATE `transaksi` SET `total`='$total', `dibayar`='$dibayar', `sisa_pembayaran`='$sisa', `status`='2', `tgl_jadi`='$tgljadi' WHERE kode_transaksi='$kodetrx'";
     mysqli_query($koneksi, $query);
     echo "<script type='text/javascript'>
       Swal.fire({
@@ -189,7 +192,7 @@
                 //call koneksi.php
                 include 'koneksi.php';
                 //mysqli_query untuk menjalankan query
-                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi,transaksi.waktu, transaksi.tgl_jadi, status.nama_status FROM transaksi JOIN status ON transaksi.status = status.id_status WHERE transaksi.status = 1");
+                $data = mysqli_query($koneksi,"SELECT transaksi.kode_transaksi,transaksi.waktu, transaksi.tgl_jadi, status.nama_status, transaksi.total, transaksi.dibayar, transaksi.sisa_pembayaran FROM transaksi JOIN status ON transaksi.status = status.id_status WHERE transaksi.status = 1");
                 //no
                 $no = 1;
                 //while untuk menampilkan data
@@ -226,6 +229,18 @@
                                     <div class="form-group">
                                       <label for="jadi">Tanggal Jadi</label>
                                       <input type="date" class="form-control" name="jadi" placeholder="Tanggal Jadi" value="<?php echo $d['tgl_jadi']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="total">Total</label>
+                                      <input type="number" class="form-control" name="total" placeholder="Total" value="<?php echo $d['total']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="dibayar">Dibayar</label>
+                                      <input type="number" class="form-control" name="dibayar" placeholder="Dibayar" value="<?php echo $d['dibayar']; ?>" required>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="sisa">Sisa Pembayaran</label>
+                                      <input type="number" class="form-control" name="sisa" placeholder="Sisa Pembayaran" value="<?php echo $d['sisa_pembayaran']; ?>" required>
                                     </div>
                                     <br>
                                     <div class="modal-footer">
