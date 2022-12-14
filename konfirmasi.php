@@ -10,6 +10,7 @@
 <?php
   session_start();
   include 'koneksi.php';
+  include 'user.php';
   
   if (!isset($_SESSION['login'])) {
       header("Location: index.php");
@@ -22,7 +23,7 @@
     $dibayar = $_POST['dibayar'];
     $sisa = $_POST['sisa'];
     
-    $query="UPDATE `transaksi` SET `total`='$total', `dibayar`='$dibayar', `sisa_pembayaran`='$sisa', `status`='2', `tgl_jadi`='$tgljadi' WHERE kode_transaksi='$kodetrx'";
+    $query="UPDATE `transaksi` SET `karyawan`='$uid', `total`='$total', `dibayar`='$dibayar', `sisa_pembayaran`='$sisa', `status`='2', `tgl_jadi`='$tgljadi' WHERE kode_transaksi='$kodetrx'";
     mysqli_query($koneksi, $query);
     echo "<script type='text/javascript'>
       Swal.fire({
@@ -232,15 +233,15 @@
                                     </div>
                                     <div class="form-group">
                                       <label for="total">Total</label>
-                                      <input type="number" class="form-control" name="total" placeholder="Total" value="<?php echo $d['total']; ?>" required>
+                                      <input type="number" class="form-control" name="total" placeholder="Total" id="total" value="<?php echo $d['total']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                       <label for="dibayar">Dibayar</label>
-                                      <input type="number" class="form-control" name="dibayar" placeholder="Dibayar" value="<?php echo $d['dibayar']; ?>" required>
+                                      <input type="number" class="form-control" onchange="sisabayar()" name="dibayar" id="bayar" placeholder="Dibayar" value="<?php echo $d['dibayar']; ?>" required>
                                     </div>
                                     <div class="form-group">
                                       <label for="sisa">Sisa Pembayaran</label>
-                                      <input type="number" class="form-control" name="sisa" placeholder="Sisa Pembayaran" value="<?php echo $d['sisa_pembayaran']; ?>" required>
+                                      <input type="number" class="form-control" name="sisa" id="sisa" placeholder="Sisa Pembayaran" value="<?php echo $d['sisa_pembayaran']; ?>" readonly>
                                     </div>
                                     <br>
                                     <div class="modal-footer">
@@ -277,6 +278,15 @@
 
   <!-- Main Footer -->
   <?php include 'footer.php' ?>
+  <script>
+    function sisabayar() {
+      var total = parseInt(document.getElementById('total').value);
+      var bayar = parseInt(document.getElementById('bayar').value);
+      var sisa = total - bayar;
+
+      document.getElementById('sisa').value = sisa;
+    }
+  </script>
   <script>
     $(function () {
       $("#tb1").DataTable({
