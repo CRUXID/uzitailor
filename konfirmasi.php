@@ -233,7 +233,7 @@
                                     </div>
                                     <div class="form-group">
                                       <label for="total">Total</label>
-                                      <input type="number" class="form-control" name="total" placeholder="Total" value="<?php echo $d['total']; ?>" required>
+                                      <input type="number" class="form-control" name="total" placeholder="Total" value="<?php echo $d['total']; ?>" readonly>
                                     </div>
                                     <div class="form-group">
                                       <label for="dibayar">Dibayar</label>
