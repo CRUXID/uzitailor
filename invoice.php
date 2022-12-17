@@ -278,8 +278,9 @@
                           </div>
                       </div>
                       <div class="col-12 text-center mt-5">
-                      <?php echo "<img alt='testing' src='barcode.php?codetype=Code39&size=40&text=".$noinv."&print=true'/>"; ?>
-                          <h2>* Terima Kasih Telah Berbelanja Di Uzi Tailor *</h2>
+                      <?php echo "<img alt='' src='barcode.php?codetype=Code39&size=70&text=".$noinv."&print=true'/>"; ?>
+                      <br>    
+                      <h2>* Terima Kasih Telah Berbelanja Di Uzi Tailor *</h2>
                       </div>
                   </div><!-- end row -->
               </div><!-- end box print -->
