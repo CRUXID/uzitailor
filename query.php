@@ -14,9 +14,10 @@ class crud extends connect {
             if($result->rowCount()>0)
             {
                 $_SESSION['login'] = "login";
+                $_SESSION ['level'] = $row['level'];
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['idk'] = $row['id_karyawan'];
-                return true;
+                return $row;
             }
             else
             {

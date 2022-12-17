@@ -32,7 +32,7 @@
         confirmButtonText: 'OK'
       }).then((result) => {
         if (result.value) {
-          header('Location: konfirmasi.php');
+          header('Location: konfirmasi_karyawan.php');
         }
       })
     </script>";
@@ -68,19 +68,16 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="transaksi.php" class="nav-link">
+            <a href="transaksi_karyawan.php" class="nav-link">
               <i class="nav-icon fas fa-shopping-cart"></i>
               <p>
-                Transaksi
+                Transaksi   
               </p>
             </a>
           </li>
-          </li>
           <li class="nav-item">
-            <a href="konfirmasi.php" class="nav-link active">
+            <a href="konfirmasi_karyawan.php" class="nav-link active">
             <i class="nav-icon fa fa-solid fa-check"></i>
               <p>
                 Konfirmasi Pesanan
@@ -88,7 +85,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="progress.php" class="nav-link">
+            <a href="progress_karyawan.php" class="nav-link">
               <i class="nav-icon fa fa-shopping-basket"></i>
               <p>
                 Order on Progress
@@ -96,7 +93,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="barang.php" class="nav-link">
+            <a href="barang_karyawan.php" class="nav-link">
               <i class="nav-icon fas fa-tshirt"></i>
               <p>
                 Master Barang
@@ -104,7 +101,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pembeli.php" class="nav-link">
+            <a href="pembeli_karyawan.php" class="nav-link">
               <i class="nav-icon fas fa-user-alt"></i>
               <p>
                 Data Pembeli
@@ -112,7 +109,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="riwayat.php" class="nav-link">
+            <a href="riwayat_karyawan.php" class="nav-link">
               <i class="nav-icon fas fa-history"></i>
               <p>
                 Riwayat Transaksi
@@ -120,23 +117,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="laporan.php" class="nav-link">
-              <i class="nav-icon fas fa-chart-line"></i>
-              <p>
-                Laporan Penjualan
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="akun.php" class="nav-link">
-              <i class="nav-icon fas fa-user-alt"></i>
-              <p>
-                Master Akun
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="konfigurasi.php" class="nav-link">
+            <a href="konfigurasi_karyawan.php" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
               <p>
                 Konfigurasi
@@ -232,7 +213,7 @@
                                     </div>
                                     <div class="form-group">
                                       <label for="total">Total</label>
-                                      <input type="number" class="form-control" name="total" placeholder="Total" value="<?php echo $d['total']; ?>" readonly>
+                                      <input type="number" class="form-control" name="total" placeholder="Total" value="<?php echo $d['total']; ?>" readonly >
                                     </div>
                                     <div class="form-group">
                                       <label for="dibayar">Dibayar</label>

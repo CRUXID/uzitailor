@@ -16,18 +16,31 @@
   if (isset($_POST['submit'])){
     $username = $_POST['username'];
     $password = $_POST['password'];
-    if($crud->login($username, $password)):
-      echo "<script type='text/javascript'>
-        Swal.fire({
-          title: 'Berhasil',
-          text: 'Berhasil Login',
-          icon: 'success',
-        })
-        setTimeout(function() {
-          window.location.href = 'transaksi.php';
-        }, 1000);
-      </script>";
-    else:
+    if($crud->login($username, $password)) {
+      if($_SESSION['level'] == 1) {
+        echo "<script type='text/javascript'>
+          Swal.fire({
+            title: 'Berhasil',
+            text: 'Berhasil Login',
+            icon: 'success',
+          })
+          setTimeout(function() {
+            window.location.href = 'transaksi.php';
+          }, 1000);
+        </script>";
+      } else if($_SESSION['level'] == 2) {
+        echo "<script type='text/javascript'>
+          Swal.fire({
+            title: 'Berhasil',
+            text: 'Berhasil Login',
+            icon: 'success',
+          })
+          setTimeout(function() {
+            window.location.href = 'transaksi_karyawan.php';
+          }, 1000);
+        </script>";
+      }
+    } else {
       echo "<script type='text/javascript'>
         Swal.fire({
           title: 'Gagal',
@@ -35,7 +48,7 @@
           icon: 'error',
         })
       </script>";
-    endif;
+    }
   }
 ?>
 <div class="login-box">
