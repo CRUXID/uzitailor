@@ -1,6 +1,6 @@
 <?php
 //bisa
- require ('../koneksi.php');
+require ('../../koneksi.php');
  $username = $_POST['username'];
  $password = $_POST['password'];
  $nama = $_POST['nama_pembeli'];

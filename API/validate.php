@@ -1,7 +1,7 @@
 
 <?php
 //bisa
-include '../koneksi.php';
+require ('../../koneksi.php');
 $userEmail = $_POST ['username'];
 
 $sqlQuery = "SELECT * FROM data_pembeli WHERE username='$userEmail'";
